@@ -1,0 +1,30 @@
+# Trimmed from the Vendure scaffold's default docker-compose.yml, which also
+# offers MySQL/MariaDB, Redis and Typesense/Elasticsearch services — we use
+# Postgres with Vendure's default (Postgres-backed) job queue and SQL search
+# plugin, so those alternatives are left out rather than kept dormant. See
+# .claude/agents/backend.md for the minimal-architecture reasoning; add any
+# of them back only when a concrete need forces the upgrade.
+#
+# We are not exposing the default Postgres port, to avoid conflicts with
+# other local Postgres instances. Update DB_PORT in .env if you change this.
+name: 'backend'
+
+services:
+    postgres_db:
+        image: postgres:16-alpine
+        volumes:
+            - postgres_db_data:/var/lib/postgresql/data
+        ports:
+            - "6543:5432"
+        environment:
+            POSTGRES_DB: vendure
+            POSTGRES_USER: vendure
+            POSTGRES_PASSWORD: QmHWDuxCnH9afbaCIXmTFg
+        labels:
+            - "io.vendure.create.name=backend"
+
+volumes:
+    postgres_db_data:
+        driver: local
+        labels:
+            - "io.vendure.create.name=backend"

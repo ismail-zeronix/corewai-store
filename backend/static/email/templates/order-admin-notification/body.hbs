@@ -1,0 +1,21 @@
+{{> header title="New Order" }}
+
+<mj-section background-color="#f5f6fb">
+    <mj-column>
+        <mj-text>
+            <h3>New order received</h3>
+        </mj-text>
+        <mj-table cellpadding="6px">
+            <tr><td><strong>Order code</strong></td><td>{{ order.code }}</td></tr>
+            <tr><td><strong>Total</strong></td><td>{{ formatMoney order.totalWithTax order.currencyCode 'en' }}</td></tr>
+            <tr><td><strong>Items</strong></td><td>{{ itemCount }}</td></tr>
+            <tr><td><strong>Customer</strong></td><td>{{ order.customer.firstName }} {{ order.customer.lastName }}</td></tr>
+            <tr><td><strong>Email</strong></td><td>{{ order.customer.emailAddress }}</td></tr>
+        </mj-table>
+        <mj-text>
+            Log in to the dashboard to view full order details and arrange fulfillment.
+        </mj-text>
+    </mj-column>
+</mj-section>
+
+{{> footer }}
