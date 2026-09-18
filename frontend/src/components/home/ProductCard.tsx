@@ -60,7 +60,7 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
   }
 
   return (
-    <Card size="sm" className="h-full min-w-0 gap-2 sm:gap-3">
+    <Card size="sm" className="h-full min-w-0 gap-2 hover:shadow-elevated sm:gap-3">
       <CardContent className="flex flex-col gap-2 sm:gap-3">
         <div className="group relative aspect-square overflow-hidden rounded-lg bg-background active:scale-[0.98] transition-transform">
           <Link href={`/product/${product.slug}`} aria-label={product.name} className="block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary">
@@ -113,8 +113,8 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
 
         <div>
           <Link href={`/product/${product.slug}`} className="block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary">
-          {product.brand && <p className="text-[11px] font-medium text-primary">{product.brand}</p>}
-          <h3 className="mt-0.5 line-clamp-2 font-display text-[13px] font-semibold leading-snug text-foreground sm:text-sm">
+          {product.brand && <p className="text-xs font-medium text-primary">{product.brand}</p>}
+          <h3 className="mt-0.5 line-clamp-2 font-display text-sm font-semibold leading-snug text-foreground sm:text-[15px]">
             {product.name}
           </h3>
           </Link>
@@ -150,6 +150,7 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
       <CardFooter className="mt-auto border-t-0 bg-transparent px-(--card-spacing) pt-0">
         <Button
           size="sm"
+          variant="secondary"
           disabled={outOfStock}
           onClick={handleAddToCart}
           className={cn(
