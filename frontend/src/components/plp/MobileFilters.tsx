@@ -17,7 +17,7 @@ export function MobileFilters({ brands, priceBounds, activeCount }: MobileFilter
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
-        className="flex min-h-11 shrink-0 items-center gap-2 rounded-lg border border-border bg-white px-3 text-sm font-medium text-foreground outline-none hover:bg-cloud focus-visible:ring-2 focus-visible:ring-primary lg:hidden"
+        className="flex min-h-11 shrink-0 items-center gap-2 rounded-xl border border-border bg-white px-3 text-sm font-medium text-foreground outline-none hover:bg-cloud focus-visible:ring-2 focus-visible:ring-primary lg:hidden"
       >
         <SlidersHorizontal className="h-4 w-4" />
         Filters

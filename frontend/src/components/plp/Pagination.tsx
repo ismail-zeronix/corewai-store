@@ -63,7 +63,7 @@ export function Pagination({ currentPage, totalPages, basePath, searchParams }: 
             aria-label={`Page ${page}`}
             aria-current={page === currentPage ? "page" : undefined}
             className={cn(
-              "hidden h-11 min-w-11 sm:flex items-center justify-center rounded-lg border border-border bg-white px-2 text-sm font-medium text-foreground hover:bg-cloud outline-none focus-visible:ring-2 focus-visible:ring-primary",
+              "hidden h-11 min-w-11 sm:flex items-center justify-center rounded-xl border border-border bg-white px-2 text-sm font-medium text-foreground hover:bg-cloud outline-none focus-visible:ring-2 focus-visible:ring-primary",
               page === currentPage && "border-primary bg-primary text-white hover:bg-primary"
             )}
           >
@@ -84,7 +84,7 @@ export function Pagination({ currentPage, totalPages, basePath, searchParams }: 
 function PageLink({ href, disabled, label }: { href: string; disabled: boolean; label: string }) {
   if (disabled) {
     return (
-      <span className="flex h-11 items-center justify-center rounded-lg border border-border bg-white px-3 text-sm font-medium text-muted-foreground opacity-50">
+      <span className="flex h-11 items-center justify-center rounded-xl border border-border bg-white px-3 text-sm font-medium text-muted-foreground opacity-50">
         {label}
       </span>
     );
@@ -92,7 +92,7 @@ function PageLink({ href, disabled, label }: { href: string; disabled: boolean; 
   return (
     <Link
       href={href}
-      className="flex h-11 items-center justify-center rounded-lg border border-border bg-white px-3 text-sm font-medium text-foreground hover:bg-cloud outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="flex h-11 items-center justify-center rounded-xl border border-border bg-white px-3 text-sm font-medium text-foreground hover:bg-cloud outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       {label}
     </Link>
