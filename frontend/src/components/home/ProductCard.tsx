@@ -12,11 +12,11 @@ import { useCart } from "@/lib/cart/cart-context";
 import type { Product } from "@/lib/placeholder-data";
 
 const badgeStyles: Record<string, string> = {
-  new: "bg-cyan text-ink",
-  sale: "bg-lime text-ink",
-  "low-stock": "bg-amber text-ink",
+  new: "bg-cyan/15 text-cyanink",
+  sale: "bg-lime/20 text-greenink",
+  "low-stock": "bg-amber/15 text-amberink",
   bestseller: "bg-primary text-white",
-  trending: "bg-ink text-lime",
+  trending: "bg-primary/10 text-primary",
   "out-of-stock": "bg-mist text-muted-foreground",
 };
 

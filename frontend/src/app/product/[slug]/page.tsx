@@ -106,7 +106,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </span>
                 )}
                 {discount && (
-                  <span className="rounded-full bg-lime px-2.5 py-0.5 text-xs font-bold text-ink">
+                  <span className="rounded-full bg-lime/20 px-2.5 py-0.5 text-xs font-bold text-greenink">
                     -{discount}%
                   </span>
                 )}
