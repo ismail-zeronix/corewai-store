@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 export function Hero() {
   return (
@@ -8,27 +8,27 @@ export function Hero() {
       <div className="grid gap-3 lg:grid-cols-3 lg:gap-4">
         <Link
           href="/category/gaming"
-          className="group relative flex aspect-[4/3] w-full items-end overflow-hidden rounded-xl bg-cloud sm:aspect-[16/9] lg:col-span-2 lg:aspect-auto lg:h-[420px] lg:rounded-3xl"
+          className="group relative flex aspect-[2/1] max-h-[220px] w-full items-end overflow-hidden rounded-xl bg-cloud md:aspect-[16/9] md:max-h-none lg:col-span-2 lg:aspect-auto lg:h-[420px] lg:rounded-3xl"
         >
           <Image
             src="/images/hero/corewai-its-products-and-service.jpg"
-            alt="ROG Xbox Ally X20 Bundle — pre-order and get a free ROG Pelta gaming headset"
+            alt="CoreWAI IT products and services, featuring laptops, desktops and networking equipment"
             fill
             priority
-            sizes="(min-width: 1024px) 66vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            sizes="(min-width: 1280px) 800px, (min-width: 1024px) 66vw, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
+            className="object-cover object-center motion-safe:transition-transform motion-safe:duration-500 md:group-hover:scale-[1.03]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
-          <div className="relative p-4 sm:p-6 lg:p-8">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-lime sm:text-xs">
+          <div className="relative p-3 md:p-6 lg:p-8">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-lime md:text-xs">
               Republic of Gamers
             </p>
-            <h1 className="mt-1 max-w-md text-balance font-display text-lg font-semibold leading-tight text-white sm:text-2xl lg:text-3xl">
+            <h1 className="mt-1 max-w-md text-balance font-display text-base font-semibold leading-tight tracking-tight text-white md:text-2xl lg:text-3xl">
               Built for the next level
             </h1>
-            <Button size="lg" className="mt-3 sm:mt-4">
+            <span className={buttonVariants({ size: "lg", className: "mt-2 h-8 text-xs md:mt-4 md:h-9 md:text-sm" })}>
               Shop ROG Xbox Ally
-            </Button>
+            </span>
           </div>
         </Link>
 

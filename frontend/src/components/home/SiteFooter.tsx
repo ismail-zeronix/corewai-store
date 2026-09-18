@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MessageCircle, Apple, PlaySquare, X } from "lucide-react";
 import { categories } from "@/lib/placeholder-data";
+import { cn } from "@/lib/utils";
 
 const columns = [
   {
@@ -50,9 +51,20 @@ const legalLinks = [
   { label: "Sitemap", href: "/sitemap" },
 ];
 
-export function SiteFooter() {
+export function SiteFooter({ mobile = "full" }: { mobile?: "full" | "compact" | "hidden" }) {
   return (
-    <footer className="mt-auto bg-blue text-white/70">
+    <>
+    {mobile === "compact" && (
+      <footer className="mt-auto border-t border-mist bg-white px-4 py-4 text-xs text-muted-foreground md:hidden">
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <a href="https://wa.me/971500000000" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-1.5 rounded-md text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            <MessageCircle className="size-4" aria-hidden="true" />Need help?
+          </a>
+          {legalLinks.slice(0, 2).map((link) => <Link key={link.href} href={link.href} className="inline-flex min-h-11 items-center rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary">{link.label}</Link>)}
+        </div>
+      </footer>
+    )}
+    <footer className={cn("mt-auto bg-blue text-white/70", mobile !== "full" && "hidden md:block")}>
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="grid grid-cols-2 gap-5 sm:gap-6 sm:grid-cols-4">
           <div className="col-span-2">
@@ -165,5 +177,6 @@ export function SiteFooter() {
         </p>
       </div>
     </footer>
+    </>
   );
 }

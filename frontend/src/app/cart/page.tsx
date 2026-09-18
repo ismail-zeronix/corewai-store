@@ -20,7 +20,7 @@ export default function CartPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
+      <main className="cart-page flex-1">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Cart" }]} />
         </div>
@@ -80,7 +80,7 @@ export default function CartPage() {
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex gap-4 rounded-2xl border border-border bg-white p-4"
+                    className="flex gap-3 rounded-xl border border-border bg-white p-3 md:gap-4 md:p-4"
                   >
                     <Link
                       href={`/product/${item.slug}`}
@@ -106,7 +106,7 @@ export default function CartPage() {
                             type="button"
                             aria-label="Decrease quantity"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="flex h-8 w-8 items-center justify-center text-foreground hover:bg-cloud"
+                            className="flex h-11 w-11 items-center justify-center text-foreground hover:bg-cloud"
                           >
                             <Minus className="h-3.5 w-3.5" />
                           </button>
@@ -117,7 +117,7 @@ export default function CartPage() {
                             type="button"
                             aria-label="Increase quantity"
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="flex h-8 w-8 items-center justify-center text-foreground hover:bg-cloud"
+                            className="flex h-11 w-11 items-center justify-center text-foreground hover:bg-cloud"
                           >
                             <Plus className="h-3.5 w-3.5" />
                           </button>
@@ -131,7 +131,7 @@ export default function CartPage() {
                             type="button"
                             aria-label="Remove item"
                             onClick={() => removeItem(item.id)}
-                            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                            className="flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -165,7 +165,7 @@ export default function CartPage() {
                 </p>
 
                 <Button
-                  size="lg"
+                  size="touch"
                   className="mt-5 w-full gap-1.5"
                   render={
                     <Link href="/checkout">
@@ -184,7 +184,7 @@ export default function CartPage() {
           )}
         </div>
       </main>
-      <SiteFooter />
+      <SiteFooter mobile="compact" />
       <WhatsAppButton />
     </>
   );

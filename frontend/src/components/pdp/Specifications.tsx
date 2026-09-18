@@ -24,7 +24,7 @@ interface SpecificationsProps {
 export function Specifications({ product }: SpecificationsProps) {
   const highlights = parseKeyHighlights(product.name);
   const showHighlights = highlights.length >= 2;
-  const outOfStock = product.inStock === false;
+  const outOfStock = product.inStock === false || product.badge === "out-of-stock";
 
   const rows: { label: string; value: string }[] = [
     ...(product.brand ? [{ label: "Brand", value: product.brand }] : []),
@@ -36,11 +36,11 @@ export function Specifications({ product }: SpecificationsProps) {
   const showFallback = !showHighlights && rows.length <= 1;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex min-w-0 flex-col gap-4">
       {showHighlights && (
         <div>
           <h3 className="font-display text-sm font-semibold text-foreground">Key Highlights</h3>
-          <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 text-sm text-muted-foreground sm:grid-cols-2 [&_li]:ml-4 [&_li]:list-disc">
+          <ul className="mt-2 grid grid-cols-1 gap-x-6 gap-y-1.5 text-xs leading-relaxed text-muted-foreground md:grid-cols-2 md:text-sm [&_li]:ml-4 [&_li]:list-disc [&_li]:break-words">
             {highlights.map((highlight) => (
               <li key={highlight}>{highlight}</li>
             ))}
@@ -48,18 +48,18 @@ export function Specifications({ product }: SpecificationsProps) {
         </div>
       )}
 
-      <div className="rounded-2xl border border-border bg-white p-4 sm:p-5">
+      <div className="overflow-hidden rounded-lg border border-border bg-white px-3 py-1 md:px-4">
         <dl className="divide-y divide-border">
           {rows.map((row) => (
             <div
               key={row.label}
-              className="flex items-center justify-between gap-4 py-2.5 text-sm first:pt-0 last:pb-0"
+              className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-3 py-2.5 text-xs md:text-sm"
             >
               <dt className="text-muted-foreground">{row.label}</dt>
               <dd
                 className={cn(
-                  "font-medium text-foreground",
-                  row.label === "Availability" && (outOfStock ? "text-destructive" : "text-greenink")
+                  "min-w-0 break-words text-right font-medium text-foreground",
+                  row.label === "Availability" && (outOfStock ? "text-destructive" : "text-primary")
                 )}
               >
                 {row.value}

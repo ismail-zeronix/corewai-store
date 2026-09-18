@@ -6,10 +6,10 @@ export default function Loading() {
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
+      <main className="product-page flex-1">
         <ProductPageSkeleton />
       </main>
-      <SiteFooter />
+      <SiteFooter mobile="hidden" />
     </>
   );
 }

@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { MobileNavigation } from "@/components/home/MobileNavigation";
 import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import { CartProvider } from "@/lib/cart/cart-context";
 import "./globals.css";
@@ -26,6 +27,12 @@ export const metadata: Metadata = {
     "CoreWAI Supply is a UAE-based multi-category store for electronics, home & kitchen, and lifestyle gadgets — fast local delivery, official warranty, pay your way.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -33,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${manrope.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cloud text-ink font-body">
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>{children}<MobileNavigation /></CartProvider>
       </body>
     </html>
   );

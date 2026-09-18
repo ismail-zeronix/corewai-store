@@ -148,7 +148,7 @@ export default function CheckoutPage() {
     return (
       <>
         <SiteHeader />
-        <main className="flex-1">
+        <main className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             {orderSnapshot ? (
               <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
@@ -265,7 +265,7 @@ export default function CheckoutPage() {
             )}
           </div>
         </main>
-        <SiteFooter />
+        <SiteFooter mobile="compact" />
         <WhatsAppButton />
       </>
     );
@@ -275,7 +275,7 @@ export default function CheckoutPage() {
     return (
       <>
         <SiteHeader />
-        <main className="flex-1">
+        <main className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
               {orderError ? (
@@ -288,11 +288,11 @@ export default function CheckoutPage() {
                   </h1>
                   <p className="text-sm text-muted-foreground">{orderError}</p>
                   <div className="mt-2 flex flex-col gap-2 sm:flex-row">
-                    <Button size="lg" onClick={handlePlaceOrder}>
+                    <Button size="touch" onClick={handlePlaceOrder}>
                       Try Again
                     </Button>
                     <Button
-                      size="lg"
+                      size="touch"
                       variant="outline"
                       onClick={() => {
                         setOrderError(null);
@@ -357,7 +357,7 @@ export default function CheckoutPage() {
             </div>
           </div>
         </main>
-        <SiteFooter />
+        <SiteFooter mobile="compact" />
         <WhatsAppButton />
       </>
     );
@@ -367,7 +367,7 @@ export default function CheckoutPage() {
     return (
       <>
         <SiteHeader />
-        <main className="flex-1">
+        <main className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
             <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Cart", href: "/cart" }, { label: "Checkout" }]} />
           </div>
@@ -381,7 +381,7 @@ export default function CheckoutPage() {
             </div>
           </div>
         </main>
-        <SiteFooter />
+        <SiteFooter mobile="compact" />
         <WhatsAppButton />
       </>
     );
@@ -391,7 +391,7 @@ export default function CheckoutPage() {
     return (
       <>
         <SiteHeader />
-        <main className="flex-1">
+        <main className="checkout-page flex-1">
           <div className="mx-auto flex max-w-xl flex-col items-center gap-4 px-4 py-20 text-center sm:px-6">
             <p className="font-display text-xl font-bold text-foreground">Your cart is empty</p>
             <p className="text-sm text-muted-foreground">Add something to your cart before checking out.</p>
@@ -403,7 +403,7 @@ export default function CheckoutPage() {
             </Link>
           </div>
         </main>
-        <SiteFooter />
+        <SiteFooter mobile="compact" />
         <WhatsAppButton />
       </>
     );
@@ -412,7 +412,7 @@ export default function CheckoutPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
+      <main className="checkout-page flex-1">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Cart", href: "/cart" }, { label: "Checkout" }]} />
         </div>
@@ -544,7 +544,7 @@ export default function CheckoutPage() {
                     </Field>
                   </div>
                   <Button
-                    size="lg"
+                    size="touch"
                     className="mt-2 w-full gap-1.5 sm:w-fit sm:self-end"
                     disabled={!shipping.fullName || !shipping.phone || !shipping.email || !shipping.address}
                     onClick={() => setStep("payment")}
@@ -579,12 +579,12 @@ export default function CheckoutPage() {
                       </button>
                     ))}
                   </div>
-                  <div className="mt-2 flex items-center justify-between">
-                    <Button variant="outline" onClick={() => setStep("shipping")} className="gap-1.5">
+                  <div className="mt-2 grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3">
+                    <Button size="touch" variant="outline" onClick={() => setStep("shipping")} className="gap-1.5">
                       <ArrowLeft className="h-4 w-4" />
                       Back
                     </Button>
-                    <Button size="lg" className="gap-1.5" onClick={() => setStep("review")}>
+                    <Button size="touch" className="gap-1.5" onClick={() => setStep("review")}>
                       Continue to Review
                       <ArrowRight className="h-4 w-4" />
                     </Button>
@@ -621,12 +621,12 @@ export default function CheckoutPage() {
                     Review your {items.length} {items.length === 1 ? "item" : "items"} in the Order Summary above.
                   </p>
 
-                  <div className="flex items-center justify-between">
-                    <Button variant="outline" onClick={() => setStep("payment")} className="gap-1.5">
+                  <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3">
+                    <Button size="touch" variant="outline" onClick={() => setStep("payment")} className="gap-1.5">
                       <ArrowLeft className="h-4 w-4" />
                       Back
                     </Button>
-                    <Button size="lg" className="gap-1.5" onClick={handlePlaceOrder}>
+                    <Button size="touch" className="gap-1.5" onClick={handlePlaceOrder}>
                       Place Order
                       <Truck className="h-4 w-4" />
                     </Button>
@@ -658,7 +658,7 @@ export default function CheckoutPage() {
           </div>
         </div>
       </main>
-      <SiteFooter />
+      <SiteFooter mobile="compact" />
       <WhatsAppButton />
     </>
   );
@@ -675,7 +675,7 @@ function Field({
 }) {
   return (
     <label className={cn("flex flex-col gap-1.5 text-sm", className)}>
-      <span className="font-medium text-foreground">{label}</span>
+      <span className="text-xs font-medium text-muted-foreground">{label}</span>
       {children}
     </label>
   );

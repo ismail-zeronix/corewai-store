@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ShieldCheck, Truck, Lock, RotateCcw, Star } from "lucide-react";
+import { ShieldCheck, Truck, Lock, RotateCcw, Star, ChevronLeft, MessageCircle } from "lucide-react";
+import Link from "next/link";
 import { SiteHeader } from "@/components/home/SiteHeader";
 import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
@@ -19,10 +20,10 @@ interface ProductPageProps {
 }
 
 const trustItems = [
-  { icon: ShieldCheck, label: "100% Genuine, official warranty" },
-  { icon: Truck, label: "Fast delivery across the UAE" },
-  { icon: Lock, label: "Secure payments — Cards, Tabby & Tamara" },
-  { icon: RotateCcw, label: "Easy 15-day returns" },
+  { icon: ShieldCheck, label: "100% Genuine, official warranty", shortLabel: "Official warranty" },
+  { icon: Truck, label: "Fast delivery across the UAE", shortLabel: "UAE delivery" },
+  { icon: Lock, label: "Secure payments — Cards, Tabby & Tamara", shortLabel: "Secure payments" },
+  { icon: RotateCcw, label: "Easy 15-day returns", shortLabel: "Easy returns" },
 ];
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
@@ -56,8 +57,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <main className="product-page min-w-0 flex-1">
+        <div className="mx-auto max-w-7xl px-4 py-1 md:px-6 md:py-4 lg:px-8">
+          <Link href={product.categorySlug ? `/category/${product.categorySlug}` : "/products"} className="inline-flex min-h-11 max-w-full items-center gap-1 rounded-md text-xs font-medium text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden">
+            <ChevronLeft className="size-4 shrink-0" aria-hidden="true" /><span className="truncate">{product.category || "All products"}</span>
+          </Link>
+          <div className="hidden md:block">
           <Breadcrumb
             items={[
               { label: "Home", href: "/" },
@@ -67,34 +72,35 @@ export default async function ProductPage({ params }: ProductPageProps) {
               { label: product.name },
             ]}
           />
+          </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-            <Gallery images={product.images && product.images.length > 0 ? product.images : [product.image]} alt={product.name} />
+        <div className="mx-auto max-w-7xl px-4 pb-6 md:px-6 md:pb-12 lg:px-8">
+          <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2 lg:gap-10">
+            <Gallery key={product.id} images={product.images && product.images.length > 0 ? product.images : [product.image]} alt={product.name} />
 
-            <div className="flex flex-col gap-4">
+            <div className="flex min-w-0 flex-col gap-3">
               {product.brand && (
-                <p className="text-sm font-semibold text-primary">{product.brand}</p>
+                <p className="text-xs font-semibold text-primary">{product.brand}</p>
               )}
-              <h1 className="font-display text-xl font-semibold leading-tight text-foreground sm:text-2xl">
+              <h1 className="break-words font-display text-lg font-semibold leading-snug tracking-tight text-foreground md:text-2xl">
                 {product.name}
               </h1>
 
               {typeof product.rating === "number" && (
-                <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <Star className="h-4 w-4 fill-amber text-amber" />
                   <span className="font-semibold text-foreground">{product.rating}</span>
                   <span>({product.reviewCount} reviews)</span>
                 </div>
               )}
 
-              <div className="flex flex-wrap items-baseline gap-3 border-t border-border pt-4">
-                <span className="font-display text-2xl font-semibold text-foreground tabular-nums">
+              <div className="flex flex-wrap items-baseline gap-2 border-t border-border pt-3">
+                <span className="font-display text-xl font-semibold tracking-tight text-foreground tabular-nums md:text-2xl">
                   {formatAed(product.price)}
                 </span>
-                {product.compareAtPrice && (
-                  <span className="text-base text-muted-foreground line-through tabular-nums">
+                {discount && product.compareAtPrice && (
+                  <span className="text-xs text-muted-foreground line-through tabular-nums md:text-sm">
                     {formatAed(product.compareAtPrice)}
                   </span>
                 )}
@@ -105,33 +111,37 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 )}
               </div>
 
-              <p className="text-sm font-medium">
-                {product.inStock === false ? (
+              <p className="text-xs font-medium">
+                {product.inStock === false || product.badge === "out-of-stock" ? (
                   <span className="text-destructive">Out of stock</span>
                 ) : (
-                  <span className="text-greenink">In stock — ready to ship</span>
+                  <span className="text-primary">In stock — ready to ship</span>
                 )}
               </p>
 
-              <AddToCartPanel product={product} />
+              <AddToCartPanel key={product.id} product={product} />
 
-              <div className="mt-2 grid grid-cols-1 gap-2.5 rounded-2xl border border-border bg-white p-4 sm:grid-cols-2">
-                {trustItems.map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2.5 text-xs text-muted-foreground">
+              <div className="grid grid-cols-2 gap-3 rounded-xl border border-border bg-primary/5 p-3 md:p-4">
+                {trustItems.map(({ icon: Icon, label, shortLabel }) => (
+                  <div key={label} className="flex items-center gap-2 text-xs leading-relaxed text-muted-foreground">
                     <Icon className="h-4 w-4 shrink-0 text-primary" strokeWidth={1.75} />
-                    {label}
+                    <span className="md:hidden">{shortLabel}</span><span className="hidden md:inline">{label}</span>
                   </div>
                 ))}
               </div>
+              <a href="https://wa.me/971500000000" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg text-xs font-medium text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden">
+                <MessageCircle className="size-4" aria-hidden="true" />Need help choosing? Chat with us
+              </a>
             </div>
           </div>
 
-          <div className="mt-12">
+          <div className="mt-5 md:mt-10">
             <ProductTabs
+              key={product.id}
               description={
                 product.description ? (
                   <div
-                    className="max-w-3xl text-sm leading-relaxed text-muted-foreground [&_li]:ml-4 [&_li]:list-disc [&_p]:mb-3"
+                    className="max-w-3xl break-words text-sm leading-relaxed text-muted-foreground [&_li]:ml-4 [&_li]:list-disc [&_p]:mb-3 [&_table]:block [&_table]:overflow-x-auto"
                     dangerouslySetInnerHTML={{ __html: product.description }}
                   />
                 ) : (
@@ -146,8 +156,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {related.length > 0 && (
-            <div className="mt-14">
-              <h2 className="mb-5 font-display text-lg font-semibold text-foreground">
+            <div className="mt-6 md:mt-12">
+              <h2 className="mb-3 font-display text-base font-semibold tracking-tight text-foreground md:text-lg">
                 You may also like
               </h2>
               <ProductRail products={related} />
@@ -155,7 +165,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           )}
         </div>
       </main>
-      <SiteFooter />
+      <SiteFooter mobile="hidden" />
       <WhatsAppButton />
     </>
   );

@@ -8,7 +8,6 @@ import {
   Heart,
   ShoppingCart,
   User,
-  Menu,
   LayoutGrid,
   ArrowRight,
   Sparkles,
@@ -21,6 +20,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { SearchDialog } from "@/components/home/SearchDialog";
+import { MobileMoreMenu } from "@/components/home/MobileMoreMenu";
 import { categories } from "@/lib/placeholder-data";
 import { useCart } from "@/lib/cart/cart-context";
 
@@ -62,16 +62,27 @@ function CategoryList({ onNavigate }: { onNavigate: () => void }) {
 }
 
 export function SiteHeader() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
-  const { itemCount } = useCart();
+  const { itemCount, isHydrated } = useCart();
 
-  const closeMenu = () => setMenuOpen(false);
   const closeCategories = () => setCategoriesOpen(false);
 
   return (
-    <header className="border-b border-mist bg-white">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:h-[76px] sm:gap-4 sm:px-6 lg:px-8">
+    <header className="mobile-site-header sticky top-0 z-30 border-b border-mist bg-white md:static md:z-auto">
+      <div className="flex h-14 items-center justify-between gap-3 px-4 md:hidden">
+        <Link href="/" aria-label="CoreWAI Supply home" className="flex min-h-11 items-center rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          <Image src="/corewai-logo.webp" alt="CoreWAI Supply" width={205} height={80} sizes="113px" priority className="h-11 w-auto object-contain" />
+        </Link>
+        <div className="ml-auto flex shrink-0 items-center gap-1">
+          <SearchDialog />
+          <Link href="/cart" aria-label={isHydrated ? `Cart, ${itemCount} items` : "Cart"} className="relative flex size-11 items-center justify-center rounded-lg text-ink outline-none hover:bg-cloud focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95">
+            <ShoppingCart className="size-5" aria-hidden="true" />
+            {isHydrated && itemCount > 0 && <span aria-hidden="true" className="absolute right-0 top-0.5 min-w-4 rounded-full bg-lime px-1 text-center text-[10px] font-semibold leading-4 text-ink">{itemCount > 99 ? "99+" : itemCount}</span>}
+          </Link>
+          <MobileMoreMenu compact />
+        </div>
+      </div>
+      <div className="mx-auto hidden h-14 max-w-7xl md:flex items-center gap-3 px-4 sm:h-[76px] sm:gap-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center" aria-label="CoreWAI Supply home">
           <Image
             src="/corewai-logo.webp"
@@ -118,7 +129,6 @@ export function SiteHeader() {
             <User className="h-5 w-5 text-muted-foreground" />
           </button>
 
-          <SearchDialog triggerClassName="flex items-center justify-center rounded-xl p-2.5 text-ink hover:bg-cloud md:hidden" />
 
           <Link
             href="/cart"
@@ -133,14 +143,7 @@ export function SiteHeader() {
             )}
           </Link>
 
-          <button
-            type="button"
-            aria-label="Open menu"
-            onClick={() => setMenuOpen(true)}
-            className="flex items-center rounded-xl p-2.5 text-ink hover:bg-cloud md:hidden"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
+
         </div>
       </div>
 
@@ -200,36 +203,7 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-        <SheetContent side="left">
-          <SheetHeader className="border-b border-mist">
-            <SheetTitle>Menu</SheetTitle>
-          </SheetHeader>
 
-          <nav className="flex flex-col gap-0.5 px-2 pt-2">
-            {primaryNav.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={closeMenu}
-                className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-ink hover:bg-cloud"
-              >
-                {item.label}
-                {item.label === "Deals / Offers" && (
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-lime" />
-                )}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="mt-1 flex items-center justify-between px-3 pb-1 pt-3">
-            <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-              Shop by Category
-            </span>
-          </div>
-          <CategoryList onNavigate={closeMenu} />
-        </SheetContent>
-      </Sheet>
     </header>
   );
 }

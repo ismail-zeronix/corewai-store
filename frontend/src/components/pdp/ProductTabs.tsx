@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Tabs, TabsList, TabsTab, TabsPanel } from "@/components/ui/tabs";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 interface ProductTabsProps {
   description: ReactNode;
@@ -16,8 +17,18 @@ const TABS = [
 ] as const;
 
 export function ProductTabs({ description, specifications, reviews }: ProductTabsProps) {
+  const content = { description, specifications, reviews };
   return (
-    <Tabs defaultValue="description">
+    <>
+    <Accordion defaultValue={["specifications"]} className="rounded-xl border border-mist bg-white px-3 md:hidden">
+      {TABS.map((tab) => (
+        <AccordionItem key={tab.value} value={tab.value}>
+          <AccordionTrigger className="min-h-12 items-center font-semibold tracking-tight hover:no-underline">{tab.label}</AccordionTrigger>
+          <AccordionContent className="pb-4">{content[tab.value]}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+    <Tabs defaultValue="description" className="hidden md:block">
       <TabsList>
         {TABS.map((tab) => (
           <TabsTab key={tab.value} value={tab.value}>
@@ -29,5 +40,6 @@ export function ProductTabs({ description, specifications, reviews }: ProductTab
       <TabsPanel value="specifications">{specifications}</TabsPanel>
       <TabsPanel value="reviews">{reviews}</TabsPanel>
     </Tabs>
+    </>
   );
 }
