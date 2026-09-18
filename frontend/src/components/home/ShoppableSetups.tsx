@@ -3,6 +3,8 @@ import { SectionHeading } from "@/components/ui/heading";
 import { shoppableSetups } from "@/lib/placeholder-data";
 import { iconMap } from "@/lib/icon-map";
 
+const setupCategories: Record<string, string> = { s1: "kitchen-appliances", s2: "laptops", s3: "smart-tvs", s4: "smart-home", s5: "toys" };
+
 const palette = ["bg-ink", "bg-blue", "bg-cyanink", "bg-amberink"];
 
 export function ShoppableSetups() {
@@ -11,7 +13,7 @@ export function ShoppableSetups() {
   return (
     <section className="mx-auto hidden max-w-7xl px-4 py-8 sm:px-6 sm:py-10 md:block lg:px-8">
       <div className="mb-5 flex items-baseline gap-2.5">
-        <SectionHeading size="sm">Shoppable setups</SectionHeading>
+        <SectionHeading size="sm">Shop by interest</SectionHeading>
         <span className="text-sm text-muted-foreground">
           — everything for a routine, in one tap
         </span>
@@ -47,14 +49,14 @@ function SetupCard({
 
   return (
     <Link
-      href="#"
+      href={`/category/${setupCategories[setup.id] ?? "more"}`}
       className={`group flex flex-col justify-between rounded-2xl p-5 text-white transition-transform hover:-translate-y-0.5 ${color} ${
         featured ? "min-h-[280px]" : "min-h-[140px]"
       } ${className}`}
     >
       <div className="flex items-center justify-between gap-2">
         {Icon && <Icon className="h-4 w-4 text-white/70" strokeWidth={2} />}
-        <span className="text-[11px] font-semibold text-white/60">{setup.itemCount} items</span>
+
       </div>
 
       <div>
@@ -66,7 +68,7 @@ function SetupCard({
         )}
         <div className="mt-3 flex items-center justify-between border-t border-white/15 pt-3">
           <span className="text-sm font-semibold">
-            From AED {setup.fromPrice.toLocaleString("en-AE")}
+            Explore category
           </span>
           <span className="text-sm text-white/60 transition-colors group-hover:text-lime">→</span>
         </div>

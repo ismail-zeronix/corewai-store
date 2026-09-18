@@ -6,6 +6,7 @@ import { brands } from "@/lib/placeholder-data";
 
 function BrandCard({ brand }: { brand: string }) {
   return (
+    <Link href={`/products?brand=${encodeURIComponent(brand)}`} className="shrink-0 rounded-xl">
     <Card
       size="sm"
       className="h-12 w-24 shrink-0 flex-row items-center justify-center py-0 transition-colors hover:ring-primary/30 hover:shadow-sm sm:h-14 sm:w-28"
@@ -14,11 +15,12 @@ function BrandCard({ brand }: { brand: string }) {
         {brand}
       </span>
     </Card>
+    </Link>
   );
 }
 
 export function BrandStrip() {
-  const row = [...brands, ...brands];
+  const row = brands;
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
@@ -39,8 +41,8 @@ export function BrandStrip() {
         </Link>
       </div>
 
-      <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-        <div className="flex w-max animate-marquee-slow gap-3 hover:[animation-play-state:paused]">
+      <div className="overflow-x-auto pb-2">
+        <div className="flex w-max gap-3 p-1">
           {row.map((brand, index) => (
             <BrandCard key={`row-${brand}-${index}`} brand={brand} />
           ))}

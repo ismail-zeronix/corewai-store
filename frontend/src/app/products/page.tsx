@@ -7,6 +7,7 @@ import { Breadcrumb } from "@/components/plp/Breadcrumb";
 import { Filters } from "@/components/plp/Filters";
 import { MobileFilters } from "@/components/plp/MobileFilters";
 import { SortSelect } from "@/components/plp/SortSelect";
+import { ActiveFilters } from "@/components/plp/ActiveFilters";
 import { ProductGrid } from "@/components/plp/ProductGrid";
 import { Pagination } from "@/components/plp/Pagination";
 import { getProducts } from "@/lib/vendure/products";
@@ -52,7 +53,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   filtered = sortProducts(filtered, sort);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const requestedPage = Number(page) || 1;
+  const parsedPage = Number(page);
+  const requestedPage = Number.isFinite(parsedPage) ? Math.floor(parsedPage) : 1;
   const currentPage = Math.min(Math.max(requestedPage, 1), totalPages);
   const pageProducts = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
@@ -62,7 +64,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "All Products" }]} />
         </div>
@@ -78,13 +80,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           </div>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[220px_1fr]">
-            <aside className="hidden lg:block">
+            <aside aria-label="Product filters" className="hidden h-fit rounded-xl border border-border bg-white p-4 lg:block">
               <Suspense fallback={null}>
                 <Filters brands={brands} priceBounds={priceBounds} />
               </Suspense>
             </aside>
 
-            <div>
+            <div className="min-w-0">
               <div className="mb-4 flex items-center justify-between gap-3 lg:justify-end">
                 <Suspense fallback={null}>
                   <MobileFilters brands={brands} priceBounds={priceBounds} activeCount={activeFilterCount} />
@@ -93,10 +95,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   <SortSelect />
                 </Suspense>
               </div>
+              <Suspense fallback={null}><ActiveFilters /></Suspense>
               <ProductGrid
                 products={pageProducts}
-                emptyTitle="No products available yet"
-                emptyDescription="Our catalogue is still being stocked — check back soon for new arrivals."
+                emptyTitle={allProducts.length > 0 ? "No matching products" : "No products available yet"}
+                emptyDescription={allProducts.length > 0 ? "Try adjusting your filters to find more products." : "Our catalogue is still being stocked. Check back soon for new arrivals."}
               />
               <Pagination
                 currentPage={currentPage}

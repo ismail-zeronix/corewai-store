@@ -17,7 +17,7 @@ export default async function BestSellersPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Best Sellers" }]} />
         </div>

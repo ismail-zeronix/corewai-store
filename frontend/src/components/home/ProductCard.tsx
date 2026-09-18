@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Star, Heart, ShoppingCart, Timer, Check } from "lucide-react";
+import { Star, ShoppingCart, Timer, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -45,19 +45,25 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
   const [activeImage, setActiveImage] = useState(0);
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
-  const outOfStock = product.badge === "out-of-stock";
+  const outOfStock = product.inStock === false || product.badge === "out-of-stock";
+  const feedbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => {
+    if (feedbackTimer.current) clearTimeout(feedbackTimer.current);
+  }, []);
 
   function handleAddToCart() {
+    if (outOfStock) return;
     addItem(product);
     setAdded(true);
-    window.setTimeout(() => setAdded(false), 1500);
+    if (feedbackTimer.current) clearTimeout(feedbackTimer.current);
+    feedbackTimer.current = setTimeout(() => setAdded(false), 1500);
   }
 
   return (
-    <Card size="sm" className="gap-2 sm:gap-3">
+    <Card size="sm" className="h-full min-w-0 gap-2 sm:gap-3">
       <CardContent className="flex flex-col gap-2 sm:gap-3">
-        <Link href={`/product/${product.slug}`} className="contents">
         <div className="group relative aspect-square overflow-hidden rounded-lg bg-background active:scale-[0.98] transition-transform">
+          <Link href={`/product/${product.slug}`} aria-label={product.name} className="block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary">
           <div
             className="flex h-full w-full transition-transform duration-300 ease-out"
             style={{ transform: `translateX(-${activeImage * 100}%)` }}
@@ -74,6 +80,7 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
               </div>
             ))}
           </div>
+          </Link>
 
           {label && (
             <span
@@ -82,45 +89,35 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
               {label}
             </span>
           )}
-          <button
-            type="button"
-            aria-label="Save to wishlist"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-foreground/40 shadow-sm transition-colors active:scale-90 hover:text-destructive"
-          >
-            <Heart className="h-4 w-4" />
-          </button>
-
           {images.length > 1 && (
-            <div className="absolute inset-x-0 bottom-2 flex items-center justify-center gap-1">
+            <div className="absolute inset-x-0 bottom-0 flex items-center justify-center">
               {images.map((src, index) => (
                 <button
                   key={src}
                   type="button"
                   aria-label={`Show image ${index + 1} of ${images.length}`}
+                  aria-pressed={index === activeImage}
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     setActiveImage(index);
                   }}
-                  className={cn(
-                    "h-1.5 rounded-full bg-white/60 shadow-sm transition-all",
-                    index === activeImage ? "w-4 bg-white" : "w-1.5 hover:bg-white/80",
-                  )}
-                />
+                  className="flex size-11 items-center justify-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                >
+                  <span className={cn("h-1.5 rounded-full shadow-sm", index === activeImage ? "w-4 bg-primary" : "w-1.5 bg-ink/30")} />
+                </button>
               ))}
             </div>
           )}
         </div>
 
         <div>
+          <Link href={`/product/${product.slug}`} className="block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary">
           {product.brand && <p className="text-[11px] font-medium text-primary">{product.brand}</p>}
           <h3 className="mt-0.5 line-clamp-2 font-display text-[13px] font-semibold leading-snug text-foreground sm:text-sm">
             {product.name}
           </h3>
+          </Link>
 
           {typeof product.rating === "number" && (
             <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
@@ -130,7 +127,7 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
             </div>
           )}
 
-          <div className="mt-1.5 flex items-baseline gap-2 tabular-nums sm:mt-2">
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2 tabular-nums sm:mt-2">
             <span className="font-display text-sm font-bold text-foreground sm:text-base">
               {formatAed(product.price)}
             </span>
@@ -148,16 +145,15 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
             </div>
           )}
         </div>
-        </Link>
       </CardContent>
 
-      <CardFooter className="border-t-0 bg-transparent px-(--card-spacing) pt-0">
+      <CardFooter className="mt-auto border-t-0 bg-transparent px-(--card-spacing) pt-0">
         <Button
           size="sm"
           disabled={outOfStock}
           onClick={handleAddToCart}
           className={cn(
-            "h-8 w-full gap-1.5 rounded-md text-xs sm:h-9 sm:text-sm",
+            "min-h-11 w-full gap-1 rounded-lg px-2 text-xs sm:text-sm",
             added && "bg-lime text-ink hover:bg-lime",
           )}
         >

@@ -1,5 +1,16 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Storefront UI
+
+- Cart notifications are shared across product cards and product detail pages. They dismiss after five seconds and pause while hovered or focused.
+- Mobile filters use a bottom sheet; selected filters can also be removed above the product grid.
+- WhatsApp links appear only when `NEXT_PUBLIC_WHATSAPP_NUMBER` is set to a real international number (digits only) in `.env.local`. Restart the development server after changing it.
+- Account, wishlist, newsletter signup, app downloads, and unfinished footer destinations are hidden until those features are implemented. The homepage instead links to new arrivals.
+- Product reviews are labeled as sample content. Review submission is unavailable until it has a working backend.
+- Payment integration is unchanged.
+
+UI checks: run `npm run lint` and `npm run build`. Browser checks should cover narrow phones, tablets and desktop widths, keyboard focus, search, filters and price validation, cart notifications, and shipping form validation. Do not place an order as part of a UI-only check.
+
 ## Getting Started
 
 First, run the development server:

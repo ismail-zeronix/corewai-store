@@ -85,7 +85,6 @@ export function AddToCartPanel({ product }: AddToCartPanelProps) {
           </Button>
         </div>
       </div>
-      <span role="status" className="sr-only">{added ? `${quantity} ${quantity === 1 ? "item" : "items"} added to your cart` : ""}</span>
     </div>
   );
 }

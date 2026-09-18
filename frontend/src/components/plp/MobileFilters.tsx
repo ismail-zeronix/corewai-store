@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose, SheetDescription } from "@/components/ui/sheet";
+import { useMobileOverlay } from "@/components/home/use-mobile-overlay";
 import { Filters } from "@/components/plp/Filters";
 
 interface MobileFiltersProps {
@@ -12,14 +12,12 @@ interface MobileFiltersProps {
 }
 
 export function MobileFilters({ brands, priceBounds, activeCount }: MobileFiltersProps) {
-  const [open, setOpen] = useState(false);
+  const { open, setOpen } = useMobileOverlay(1024);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="flex h-9 items-center gap-1.5 rounded-lg border border-border bg-white px-3 text-sm font-medium text-foreground hover:bg-cloud lg:hidden"
+      <SheetTrigger
+        className="flex min-h-11 shrink-0 items-center gap-2 rounded-lg border border-border bg-white px-3 text-sm font-medium text-foreground outline-none hover:bg-cloud focus-visible:ring-2 focus-visible:ring-primary lg:hidden"
       >
         <SlidersHorizontal className="h-4 w-4" />
         Filters
@@ -28,13 +26,17 @@ export function MobileFilters({ brands, priceBounds, activeCount }: MobileFilter
             {activeCount}
           </span>
         )}
-      </button>
-      <SheetContent side="left" className="overflow-y-auto">
-        <SheetHeader className="border-b border-border">
+      </SheetTrigger>
+      <SheetContent side="bottom" className="mobile-sheet gap-0 rounded-t-2xl">
+        <SheetHeader className="shrink-0 border-b border-border pr-16">
           <SheetTitle>Filters</SheetTitle>
+          <SheetDescription>Narrow your selection by brand, price and availability.</SheetDescription>
         </SheetHeader>
-        <div className="px-4 pb-6">
+        <div className="min-h-0 overflow-y-auto overscroll-contain p-4">
           <Filters brands={brands} priceBounds={priceBounds} />
+        </div>
+        <div className="shrink-0 border-t border-border p-4">
+          <SheetClose className="flex min-h-11 w-full items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-white outline-none hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">View products</SheetClose>
         </div>
       </SheetContent>
     </Sheet>

@@ -30,13 +30,14 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
             <SectionHeading size="sm" className="mt-1">Handpicked just for you</SectionHeading>
           </div>
 
-          <div className="flex items-center gap-1 rounded-full border border-border bg-background p-1">
+          <div aria-label="Product collections" className="flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-border bg-background p-1">
             {tabs.map((tab) => (
               <button
                 key={tab.label}
                 type="button"
                 onClick={() => setActive(tab.label)}
-                className={`rounded-full px-2.5 py-1 text-xs font-semibold transition-colors sm:px-3.5 sm:py-1.5 sm:text-sm ${
+                aria-pressed={active === tab.label}
+                className={`min-h-11 shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold transition-colors sm:px-3.5 sm:py-1.5 sm:text-sm ${
                   active === tab.label
                     ? "bg-white text-primary shadow-sm"
                     : "text-muted-foreground hover:text-foreground"

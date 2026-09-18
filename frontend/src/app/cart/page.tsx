@@ -20,7 +20,7 @@ export default function CartPage() {
   return (
     <>
       <SiteHeader />
-      <main className="cart-page flex-1">
+      <main id="main-content" tabIndex={-1} className="cart-page flex-1">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Cart" }]} />
         </div>
@@ -104,9 +104,10 @@ export default function CartPage() {
                         <div className="flex items-center rounded-lg border border-border">
                           <button
                             type="button"
-                            aria-label="Decrease quantity"
+                            aria-label={`Decrease quantity of ${item.name}`}
+                            disabled={item.quantity <= 1}
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="flex h-11 w-11 items-center justify-center text-foreground hover:bg-cloud"
+                            className="flex h-11 w-11 items-center justify-center text-foreground hover:bg-cloud disabled:opacity-40"
                           >
                             <Minus className="h-3.5 w-3.5" />
                           </button>
@@ -115,9 +116,9 @@ export default function CartPage() {
                           </span>
                           <button
                             type="button"
-                            aria-label="Increase quantity"
+                            aria-label={`Increase quantity of ${item.name}`}
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="flex h-11 w-11 items-center justify-center text-foreground hover:bg-cloud"
+                            className="flex h-11 w-11 items-center justify-center text-foreground hover:bg-cloud disabled:opacity-40"
                           >
                             <Plus className="h-3.5 w-3.5" />
                           </button>
@@ -129,7 +130,7 @@ export default function CartPage() {
                           </span>
                           <button
                             type="button"
-                            aria-label="Remove item"
+                            aria-label={`Remove ${item.name} from cart`}
                             onClick={() => removeItem(item.id)}
                             className="flex h-11 w-11 items-center justify-center rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                           >
@@ -155,7 +156,7 @@ export default function CartPage() {
                   </div>
                 </div>
                 <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
-                  <span className="font-semibold text-foreground">Total</span>
+                  <span className="font-semibold text-foreground">Estimated total</span>
                   <span className="font-display text-lg font-semibold text-foreground tabular-nums">
                     {formatAed(subtotal)}
                   </span>

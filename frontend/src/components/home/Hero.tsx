@@ -7,7 +7,7 @@ export function Hero() {
     <section className="mx-auto max-w-7xl px-4 pt-3 sm:px-6 sm:pt-4 lg:px-8 lg:pt-6">
       <div className="grid gap-3 lg:grid-cols-3 lg:gap-4">
         <Link
-          href="/category/gaming"
+          href="/products"
           className="group relative flex aspect-[2/1] max-h-[220px] w-full items-end overflow-hidden rounded-xl bg-cloud md:aspect-[16/9] md:max-h-none lg:col-span-2 lg:aspect-auto lg:h-[420px] lg:rounded-3xl"
         >
           <Image
@@ -21,13 +21,13 @@ export function Hero() {
           <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
           <div className="relative p-3 md:p-6 lg:p-8">
             <p className="text-[10px] font-bold uppercase tracking-widest text-lime md:text-xs">
-              Republic of Gamers
+              Tech for work and home
             </p>
             <h1 className="mt-1 max-w-md text-balance font-display text-base font-semibold leading-tight tracking-tight text-white md:text-2xl lg:text-3xl">
               Built for the next level
             </h1>
             <span className={buttonVariants({ size: "lg", className: "mt-2 h-8 text-xs md:mt-4 md:h-9 md:text-sm" })}>
-              Shop ROG Xbox Ally
+              Explore products
             </span>
           </div>
         </Link>
@@ -54,7 +54,7 @@ export function Hero() {
           >
             <Image
               src="/images/hero/rog-xbox-ally.jpg"
-              alt="ROG Flow Z13-KJP — Republic of Gamers in alliance with Kojima Productions"
+              alt="ROG Xbox Ally-KJP — Republic of Gamers in alliance with Kojima Productions"
               fill
               sizes="33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"

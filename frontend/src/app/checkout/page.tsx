@@ -148,7 +148,7 @@ export default function CheckoutPage() {
     return (
       <>
         <SiteHeader />
-        <main className="checkout-page flex-1">
+        <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             {orderSnapshot ? (
               <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
@@ -275,7 +275,7 @@ export default function CheckoutPage() {
     return (
       <>
         <SiteHeader />
-        <main className="checkout-page flex-1">
+        <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
               {orderError ? (
@@ -286,7 +286,7 @@ export default function CheckoutPage() {
                   <h1 className="font-display text-xl font-semibold text-foreground sm:text-2xl">
                     We couldn&apos;t place your order
                   </h1>
-                  <p className="text-sm text-muted-foreground">{orderError}</p>
+                  <p role="alert" className="text-sm text-muted-foreground">{orderError}</p>
                   <div className="mt-2 flex flex-col gap-2 sm:flex-row">
                     <Button size="touch" onClick={handlePlaceOrder}>
                       Try Again
@@ -367,7 +367,7 @@ export default function CheckoutPage() {
     return (
       <>
         <SiteHeader />
-        <main className="checkout-page flex-1">
+        <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
             <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Cart", href: "/cart" }, { label: "Checkout" }]} />
           </div>
@@ -391,7 +391,7 @@ export default function CheckoutPage() {
     return (
       <>
         <SiteHeader />
-        <main className="checkout-page flex-1">
+        <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
           <div className="mx-auto flex max-w-xl flex-col items-center gap-4 px-4 py-20 text-center sm:px-6">
             <p className="font-display text-xl font-bold text-foreground">Your cart is empty</p>
             <p className="text-sm text-muted-foreground">Add something to your cart before checking out.</p>
@@ -412,7 +412,7 @@ export default function CheckoutPage() {
   return (
     <>
       <SiteHeader />
-      <main className="checkout-page flex-1">
+      <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Cart", href: "/cart" }, { label: "Checkout" }]} />
         </div>
@@ -485,12 +485,14 @@ export default function CheckoutPage() {
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_340px]">
             <div className="rounded-2xl border border-border bg-white p-5 sm:p-6">
               {step === "shipping" && (
-                <div className="flex flex-col gap-4">
+                <form onSubmit={(event) => { event.preventDefault(); setStep("payment"); }} className="flex flex-col gap-4">
                   <h2 className="font-display text-lg font-bold text-foreground">Shipping Details</h2>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <Field label="Full Name">
                       <Input
                         required
+                        autoComplete="name"
+                        pattern=".*\S.*"
                         value={shipping.fullName}
                         onChange={(e) => updateShipping("fullName", e.target.value)}
                         placeholder="Jane Doe"
@@ -500,6 +502,7 @@ export default function CheckoutPage() {
                       <Input
                         required
                         type="tel"
+                        autoComplete="tel"
                         value={shipping.phone}
                         onChange={(e) => updateShipping("phone", e.target.value)}
                         placeholder="+971 5X XXX XXXX"
@@ -509,6 +512,7 @@ export default function CheckoutPage() {
                       <Input
                         required
                         type="email"
+                        autoComplete="email"
                         value={shipping.email}
                         onChange={(e) => updateShipping("email", e.target.value)}
                         placeholder="jane@example.com"
@@ -517,6 +521,7 @@ export default function CheckoutPage() {
                     <Field label="Delivery Address" className="sm:col-span-2">
                       <Input
                         required
+                        autoComplete="street-address"
                         value={shipping.address}
                         onChange={(e) => updateShipping("address", e.target.value)}
                         placeholder="Street, building, apartment"
@@ -524,9 +529,10 @@ export default function CheckoutPage() {
                     </Field>
                     <Field label="Emirate">
                       <select
+                        autoComplete="address-level1"
                         value={shipping.emirate}
                         onChange={(e) => updateShipping("emirate", e.target.value)}
-                        className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                        className="h-11 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                       >
                         {emirates.map((emirate) => (
                           <option key={emirate} value={emirate}>
@@ -546,13 +552,12 @@ export default function CheckoutPage() {
                   <Button
                     size="touch"
                     className="mt-2 w-full gap-1.5 sm:w-fit sm:self-end"
-                    disabled={!shipping.fullName || !shipping.phone || !shipping.email || !shipping.address}
-                    onClick={() => setStep("payment")}
+                    type="submit"
                   >
                     Continue to Payment
                     <ArrowRight className="h-4 w-4" />
                   </Button>
-                </div>
+                </form>
               )}
 
               {step === "payment" && (

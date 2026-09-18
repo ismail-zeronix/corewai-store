@@ -16,7 +16,7 @@ export default function CategoriesPage() {
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Categories" }]} />
         </div>
@@ -44,7 +44,6 @@ export default function CategoriesPage() {
                     )}
                   </span>
                   <span className="text-sm font-semibold leading-tight text-foreground">{category.name}</span>
-                  <span className="text-xs text-muted-foreground">{category.itemCount}</span>
                 </Link>
               );
             })}

@@ -1,3 +1,4 @@
+import { whatsappUrl } from "@/lib/store-contact";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ShieldCheck, Truck, Lock, RotateCcw, Star, ChevronLeft, MessageCircle } from "lucide-react";
@@ -57,7 +58,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <>
       <SiteHeader />
-      <main className="product-page min-w-0 flex-1">
+      <main id="main-content" tabIndex={-1} className="product-page min-w-0 flex-1">
         <div className="mx-auto max-w-7xl px-4 py-1 md:px-6 md:py-4 lg:px-8">
           <Link href={product.categorySlug ? `/category/${product.categorySlug}` : "/products"} className="inline-flex min-h-11 max-w-full items-center gap-1 rounded-md text-xs font-medium text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden">
             <ChevronLeft className="size-4 shrink-0" aria-hidden="true" /><span className="truncate">{product.category || "All products"}</span>
@@ -129,9 +130,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </div>
                 ))}
               </div>
-              <a href="https://wa.me/971500000000" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg text-xs font-medium text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden">
+              {whatsappUrl && <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg text-xs font-medium text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden">
                 <MessageCircle className="size-4" aria-hidden="true" />Need help choosing? Chat with us
-              </a>
+              </a>}
             </div>
           </div>
 
@@ -141,8 +142,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
               description={
                 product.description ? (
                   <div
-                    className="max-w-3xl break-words text-sm leading-relaxed text-muted-foreground [&_li]:ml-4 [&_li]:list-disc [&_p]:mb-3 [&_table]:block [&_table]:overflow-x-auto"
-                    dangerouslySetInnerHTML={{ __html: product.description }}
+                    className="max-w-3xl break-words text-sm leading-relaxed text-muted-foreground [&_li]:ml-4 [&_li]:list-disc [&_p]:mb-3 [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_img]:h-auto [&_img]:max-w-full"
+                    dangerouslySetInnerHTML={{ __html: product.description.replace(/<a\b[^>]*\bhref=(['"])#\1[^>]*>([\s\S]*?)<\/a>/gi, "$2") }}
                   />
                 ) : (
                   <p className="text-sm text-muted-foreground">

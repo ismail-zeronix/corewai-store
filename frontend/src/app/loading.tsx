@@ -21,7 +21,7 @@ export default function Loading() {
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <section className="mx-auto max-w-7xl px-4 pt-3 sm:px-6 sm:pt-4 lg:px-8 lg:pt-6">
           <Skeleton className="aspect-[4/3] w-full rounded-xl sm:aspect-[16/9] lg:h-[420px] lg:rounded-3xl" />
         </section>

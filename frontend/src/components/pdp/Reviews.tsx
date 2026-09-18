@@ -22,6 +22,7 @@ export function Reviews({ product }: ReviewsProps) {
 
   return (
     <div className="flex flex-col gap-6">
+      <p className="rounded-xl border border-border bg-cloud p-4 text-sm text-muted-foreground">These are sample reviews for preview purposes, not customer feedback.</p>
       <ReviewForm />
 
       <div className="grid grid-cols-1 gap-6 rounded-2xl border border-border bg-white p-4 sm:grid-cols-[auto_1fr] sm:p-5">
@@ -67,7 +68,7 @@ export function Reviews({ product }: ReviewsProps) {
               {review.verified && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-lime/20 px-2 py-0.5 text-[10px] font-semibold text-ink">
                   <BadgeCheck className="h-3 w-3" />
-                  Verified Purchase
+                  Sample review
                 </span>
               )}
             </div>

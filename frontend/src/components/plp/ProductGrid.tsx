@@ -24,7 +24,7 @@ export function ProductGrid({
         <p className="max-w-sm text-sm text-muted-foreground">{emptyDescription}</p>
         <Link
           href="/products"
-          className="mt-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white hover:bg-primary/90"
+          className="mt-2 inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white hover:bg-primary/90"
         >
           Browse All Products
         </Link>

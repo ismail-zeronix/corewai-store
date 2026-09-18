@@ -55,7 +55,7 @@ export function FaqAndSearches() {
               <Link
                 key={term}
                 href={`/search?q=${encodeURIComponent(term)}`}
-                className="rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary sm:text-sm"
+                className="inline-flex min-h-11 items-center rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary sm:text-sm"
               >
                 {term}
               </Link>

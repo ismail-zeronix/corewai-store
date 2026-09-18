@@ -24,8 +24,7 @@ export function FeaturedCategories() {
                   />
                 </div>
                 <div className="w-full">
-                  <h3 className="truncate text-xs font-semibold text-foreground sm:text-sm">{category.name}</h3>
-                  <p className="text-[11px] text-muted-foreground sm:text-xs">{category.itemCount}</p>
+                  <h3 className="line-clamp-2 min-h-8 text-xs font-semibold text-foreground sm:text-sm">{category.name}</h3>
                 </div>
               </CardContent>
             </Card>

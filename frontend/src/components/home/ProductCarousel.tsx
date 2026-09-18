@@ -1,6 +1,5 @@
 "use client";
 
-import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
@@ -43,7 +42,6 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
 
         <Carousel
           opts={{ align: "start", loop: true }}
-          plugins={[Autoplay({ delay: 4000, stopOnInteraction: true })]}
           className="px-1"
         >
           <CarouselContent>
@@ -56,8 +54,8 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden lg:flex" />
-          <CarouselNext className="hidden lg:flex" />
+          <CarouselPrevious className="-left-3 size-11 hidden lg:flex" />
+          <CarouselNext className="-right-3 size-11 hidden lg:flex" />
         </Carousel>
       </div>
     </section>

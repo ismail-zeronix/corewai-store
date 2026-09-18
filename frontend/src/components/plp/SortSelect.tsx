@@ -11,6 +11,7 @@ export function SortSelect() {
 
   function handleChange(value: string) {
     const params = new URLSearchParams(searchParams.toString());
+    params.delete("page");
     if (value === "featured") {
       params.delete("sort");
     } else {
@@ -25,7 +26,7 @@ export function SortSelect() {
       value={current}
       onChange={(e) => handleChange(e.target.value)}
       aria-label="Sort products"
-      className="h-9 rounded-lg border border-border bg-white px-3 text-sm font-medium text-foreground focus-visible:border-ring focus-visible:outline-none"
+      className="h-11 min-w-0 max-w-full rounded-lg border border-border bg-white px-3 text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       {sortOptions.map((option) => (
         <option key={option.value} value={option.value}>

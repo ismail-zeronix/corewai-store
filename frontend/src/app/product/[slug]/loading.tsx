@@ -6,7 +6,7 @@ export default function Loading() {
   return (
     <>
       <SiteHeader />
-      <main className="product-page flex-1">
+      <main id="main-content" tabIndex={-1} className="product-page flex-1">
         <ProductPageSkeleton />
       </main>
       <SiteFooter mobile="hidden" />

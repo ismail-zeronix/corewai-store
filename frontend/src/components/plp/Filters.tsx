@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 interface FiltersProps {
@@ -27,6 +27,7 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   const activeBrands = new Set(searchParams.get("brand")?.split(",").filter(Boolean));
   const minPrice = searchParams.get("minPrice") ?? "";
@@ -35,10 +36,16 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
 
   const [minInput, setMinInput] = useState(minPrice);
   const [maxInput, setMaxInput] = useState(maxPrice);
+  const [priceSource, setPriceSource] = useState({ minPrice, maxPrice });
+  if (priceSource.minPrice !== minPrice || priceSource.maxPrice !== maxPrice) {
+    setPriceSource({ minPrice, maxPrice });
+    setMinInput(minPrice);
+    setMaxInput(maxPrice);
+  }
 
   function push(params: URLSearchParams) {
     const query = params.toString();
-    router.push(query ? `${pathname}?${query}` : pathname);
+    startTransition(() => router.push(query ? `${pathname}?${query}` : pathname, { scroll: false }));
   }
 
   function toggleBrand(brand: string) {
@@ -60,9 +67,7 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
   }
 
   function clearAll() {
-    const params = new URLSearchParams();
-    const sort = searchParams.get("sort");
-    if (sort) params.set("sort", sort);
+    const params = withUpdatedParams(searchParams, { brand: null, minPrice: null, maxPrice: null, inStock: null });
     setMinInput("");
     setMaxInput("");
     push(params);
@@ -71,13 +76,15 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
   const hasActiveFilters = activeBrands.size > 0 || Boolean(minPrice) || Boolean(maxPrice) || inStockOnly;
 
   return (
-    <div className="flex flex-col gap-6">
+    <fieldset disabled={isPending} aria-busy={isPending} className="flex min-w-0 flex-col gap-6 disabled:opacity-60">
+      <legend className="sr-only">Filter products</legend>
+      <span role="status" className="sr-only">{isPending ? "Updating products" : ""}</span>
       {brands.length > 0 && (
         <div>
           <h3 className="mb-3 text-sm font-semibold text-foreground">Brand</h3>
           <div className="flex flex-col gap-2">
             {brands.map((brand) => (
-              <label key={brand} className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
+              <label key={brand} className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-muted-foreground">
                 <input
                   type="checkbox"
                   checked={activeBrands.has(brand)}
@@ -91,41 +98,42 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
         </div>
       )}
 
-      <div>
+      <form onSubmit={(event) => { event.preventDefault(); applyPrice(); }}>
         <h3 className="mb-3 text-sm font-semibold text-foreground">Price (AED)</h3>
         <div className="flex items-center gap-2">
           <input
             type="number"
-            inputMode="numeric"
+            inputMode="decimal"
+            min="0"
+            step="0.01"
             placeholder={String(priceBounds.min)}
             value={minInput}
             onChange={(event) => setMinInput(event.target.value)}
-            onBlur={applyPrice}
             aria-label="Minimum price"
-            className="h-9 w-full rounded-lg border border-border bg-white px-2 text-sm"
+            className="h-11 w-full min-w-0 rounded-lg border border-border bg-white px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
           />
           <span className="text-muted-foreground">–</span>
           <input
             type="number"
-            inputMode="numeric"
+            inputMode="decimal"
+            min={minInput || 0}
+            step="0.01"
             placeholder={String(priceBounds.max)}
             value={maxInput}
             onChange={(event) => setMaxInput(event.target.value)}
-            onBlur={applyPrice}
             aria-label="Maximum price"
-            className="h-9 w-full rounded-lg border border-border bg-white px-2 text-sm"
+            className="h-11 w-full min-w-0 rounded-lg border border-border bg-white px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
           />
         </div>
         <button
-          type="button"
-          onClick={applyPrice}
-          className="mt-2 text-xs font-semibold text-primary hover:underline"
+          type="submit"
+          className="mt-2 min-h-11 w-full rounded-lg border border-primary/30 px-3 text-sm font-semibold text-primary outline-none hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-primary"
         >
-          Apply
+          Apply price
         </button>
-      </div>
+      </form>
 
-      <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground">
+      <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-foreground">
         <input
           type="checkbox"
           checked={inStockOnly}
@@ -139,11 +147,11 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
         <button
           type="button"
           onClick={clearAll}
-          className="w-fit text-xs font-semibold text-primary hover:underline"
+          className="min-h-11 w-fit rounded-lg px-2 text-sm font-semibold text-primary outline-none hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-primary"
         >
           Clear all filters
         </button>
       )}
-    </div>
+    </fieldset>
   );
 }
