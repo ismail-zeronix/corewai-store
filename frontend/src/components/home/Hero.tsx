@@ -18,15 +18,15 @@ export function Hero() {
             sizes="(min-width: 1280px) 800px, (min-width: 1024px) 66vw, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
             className="object-cover object-center motion-safe:transition-transform motion-safe:duration-500 md:group-hover:scale-[1.03]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
-          <div className="relative p-3 md:p-6 lg:p-8">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-lime md:text-xs">
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+          <div className="relative p-4 max-[340px]:p-3 md:p-8 lg:p-10">
+            <p className="text-xs font-bold uppercase tracking-widest text-lime">
               Tech for work and home
             </p>
-            <h1 className="mt-1 max-w-md text-balance font-display text-base font-semibold leading-tight tracking-tight text-white md:text-2xl lg:text-3xl">
+            <h1 className="mt-2 max-w-md text-balance font-display text-2xl font-semibold leading-tight tracking-tight text-white max-[340px]:mt-1 max-[340px]:text-xl md:text-4xl lg:text-5xl">
               Built for the next level
             </h1>
-            <span className={buttonVariants({ size: "lg", className: "mt-2 h-8 text-xs md:mt-4 md:h-9 md:text-sm" })}>
+            <span className={buttonVariants({ size: "lg", className: "mt-3 max-[340px]:mt-2 md:mt-5" })}>
               Explore products
             </span>
           </div>

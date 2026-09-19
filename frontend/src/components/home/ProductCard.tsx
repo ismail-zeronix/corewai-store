@@ -12,11 +12,11 @@ import { useCart } from "@/lib/cart/cart-context";
 import type { Product } from "@/lib/placeholder-data";
 
 const badgeStyles: Record<string, string> = {
-  new: "bg-cyan text-ink",
-  sale: "bg-lime text-ink",
-  "low-stock": "bg-amber text-ink",
+  new: "bg-cyan/15 text-cyanink",
+  sale: "bg-lime/20 text-ink",
+  "low-stock": "bg-amber/15 text-amberink",
   bestseller: "bg-primary text-white",
-  trending: "bg-ink text-lime",
+  trending: "bg-primary/10 text-primary",
   "out-of-stock": "bg-mist text-muted-foreground",
 };
 
@@ -60,7 +60,7 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
   }
 
   return (
-    <Card size="sm" className="h-full min-w-0 gap-2 sm:gap-3">
+    <Card size="sm" className="h-full min-w-0 gap-2 hover:shadow-elevated sm:gap-3">
       <CardContent className="flex flex-col gap-2 sm:gap-3">
         <div className="group relative aspect-square overflow-hidden rounded-lg bg-background active:scale-[0.98] transition-transform">
           <Link href={`/product/${product.slug}`} aria-label={product.name} className="block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary">
@@ -113,8 +113,8 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
 
         <div>
           <Link href={`/product/${product.slug}`} className="block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary">
-          {product.brand && <p className="text-[11px] font-medium text-primary">{product.brand}</p>}
-          <h3 className="mt-0.5 line-clamp-2 font-display text-[13px] font-semibold leading-snug text-foreground sm:text-sm">
+          {product.brand && <p className="text-xs font-medium text-primary">{product.brand}</p>}
+          <h3 className="mt-0.5 line-clamp-2 font-display text-sm font-semibold leading-snug text-foreground sm:text-[15px]">
             {product.name}
           </h3>
           </Link>
@@ -150,10 +150,11 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
       <CardFooter className="mt-auto border-t-0 bg-transparent px-(--card-spacing) pt-0">
         <Button
           size="sm"
+          variant="outline"
           disabled={outOfStock}
           onClick={handleAddToCart}
           className={cn(
-            "min-h-11 w-full gap-1 rounded-lg px-2 text-xs sm:text-sm",
+            "min-h-11 w-full gap-1 rounded-lg border-primary/30 px-2 text-xs text-primary hover:bg-primary/5 hover:text-primary sm:text-sm",
             added && "bg-lime text-ink hover:bg-lime",
           )}
         >

@@ -110,7 +110,7 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
             value={minInput}
             onChange={(event) => setMinInput(event.target.value)}
             aria-label="Minimum price"
-            className="h-11 w-full min-w-0 rounded-lg border border-border bg-white px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="h-11 w-full min-w-0 rounded-xl border border-border bg-white px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
           />
           <span className="text-muted-foreground">–</span>
           <input
@@ -122,12 +122,12 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
             value={maxInput}
             onChange={(event) => setMaxInput(event.target.value)}
             aria-label="Maximum price"
-            className="h-11 w-full min-w-0 rounded-lg border border-border bg-white px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="h-11 w-full min-w-0 rounded-xl border border-border bg-white px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
           />
         </div>
         <button
           type="submit"
-          className="mt-2 min-h-11 w-full rounded-lg border border-primary/30 px-3 text-sm font-semibold text-primary outline-none hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-primary"
+          className="mt-2 min-h-11 w-full rounded-xl border border-primary/30 px-3 text-sm font-semibold text-primary outline-none hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-primary"
         >
           Apply price
         </button>
@@ -147,7 +147,7 @@ export function Filters({ brands, priceBounds }: FiltersProps) {
         <button
           type="button"
           onClick={clearAll}
-          className="min-h-11 w-fit rounded-lg px-2 text-sm font-semibold text-primary outline-none hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-primary"
+          className="min-h-11 w-fit rounded-xl px-2 text-sm font-semibold text-primary outline-none hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-primary"
         >
           Clear all filters
         </button>

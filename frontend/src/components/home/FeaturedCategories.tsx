@@ -11,7 +11,7 @@ export function FeaturedCategories() {
           <Link key={category.slug} href={`/category/${category.slug}`} className="group">
             <Card
               size="sm"
-              className="items-center gap-2 rounded-md py-2 text-center transition-all hover:-translate-y-0.5 hover:ring-primary/30 hover:shadow-md sm:py-3"
+              className="items-center gap-2 rounded-md py-2 text-center transition-all hover:-translate-y-0.5 hover:ring-primary/30 hover:shadow-elevated sm:py-3"
             >
               <CardContent className="flex w-full flex-col items-center gap-1.5 px-2 sm:gap-2 sm:px-3">
                 <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-background">

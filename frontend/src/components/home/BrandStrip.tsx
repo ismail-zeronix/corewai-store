@@ -9,7 +9,7 @@ function BrandCard({ brand }: { brand: string }) {
     <Link href={`/products?brand=${encodeURIComponent(brand)}`} className="shrink-0 rounded-xl">
     <Card
       size="sm"
-      className="h-12 w-24 shrink-0 flex-row items-center justify-center py-0 transition-colors hover:ring-primary/30 hover:shadow-sm sm:h-14 sm:w-28"
+      className="h-12 w-24 shrink-0 flex-row items-center justify-center py-0 transition-all hover:ring-primary/30 hover:shadow-elevated sm:h-14 sm:w-28"
     >
       <span className="font-display text-xs font-semibold text-foreground/50">
         {brand}

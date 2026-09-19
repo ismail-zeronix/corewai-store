@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { MobileNavigation } from "@/components/home/MobileNavigation";
+import { PromoStrip } from "@/components/home/PromoStrip";
 import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import { CartProvider } from "@/lib/cart/cart-context";
 import "./globals.css";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-cloud text-ink font-body">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-primary">Skip to content</a>
+        <PromoStrip />
         <CartProvider>{children}<MobileNavigation /></CartProvider>
       </body>
     </html>
