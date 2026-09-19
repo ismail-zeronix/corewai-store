@@ -33,7 +33,7 @@ export function LenovoWorkstations() {
           {/* Hero tile — chassis close-up, ships with its own gradient background */}
           <Link
             href={LENOVO_HREF}
-            className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-2xl sm:col-span-2 sm:min-h-[320px] lg:col-span-2 lg:row-span-2"
+            className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-xl sm:col-span-2 sm:min-h-[320px] lg:col-span-2 lg:row-span-2"
           >
             <Image
               src="/images/bento-lenovo/blade-6-bg.png"
@@ -44,7 +44,7 @@ export function LenovoWorkstations() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent" />
             <div className="relative p-4 sm:p-8">
-              <p className="text-[11px] font-bold uppercase tracking-widest text-lime sm:text-xs">
+              <p className="text-caption font-bold uppercase tracking-widest text-lime ">
                 ThinkStation P Series
               </p>
               <h3 className="mt-1 max-w-xs text-balance font-display text-lg font-semibold leading-tight text-white sm:max-w-sm sm:text-3xl">
@@ -63,7 +63,7 @@ export function LenovoWorkstations() {
           {/* CTA tile — solid brand color, no image */}
           <Link
             href={LENOVO_HREF}
-            className="group flex min-h-[110px] flex-col justify-between rounded-2xl bg-cyanink p-4 text-white transition-transform hover:-translate-y-0.5 sm:min-h-[140px] sm:p-5"
+            className="group flex min-h-[110px] flex-col justify-between rounded-xl bg-cyanink p-4 text-white transition-transform hover:-translate-y-0.5 sm:min-h-[140px] sm:p-5"
           >
             <Cpu className="h-5 w-5 text-white/70" strokeWidth={2} />
             <div>
@@ -82,7 +82,7 @@ export function LenovoWorkstations() {
           {/* Product tile — full-bleed shot, ships with its own gradient background */}
           <Link
             href={LENOVO_HREF}
-            className="group relative flex min-h-[140px] overflow-hidden rounded-2xl sm:min-h-[180px]"
+            className="group relative flex min-h-[140px] overflow-hidden rounded-xl sm:min-h-[180px]"
           >
             <Image
               src="/images/bento-lenovo/product-px.png"
@@ -105,7 +105,7 @@ export function LenovoWorkstations() {
           {/* Lineup tile — transparent PNG (with its own PX/P7/P5 model labels) on a brand-navy backdrop */}
           <Link
             href={LENOVO_HREF}
-            className="group flex min-h-[180px] flex-col items-center gap-2 overflow-hidden rounded-2xl bg-ink p-4 transition-transform hover:-translate-y-0.5 sm:col-span-2 sm:min-h-[220px] sm:flex-row sm:gap-4 sm:p-5 lg:col-span-2 lg:p-6"
+            className="group flex min-h-[180px] flex-col items-center gap-2 overflow-hidden rounded-xl bg-ink p-4 transition-transform hover:-translate-y-0.5 sm:col-span-2 sm:min-h-[220px] sm:flex-row sm:gap-4 sm:p-5 lg:col-span-2 lg:p-6"
           >
             <div className="order-2 w-full sm:order-1 sm:max-w-[42%]">
               <h3 className="font-display text-base font-semibold text-white sm:text-lg">

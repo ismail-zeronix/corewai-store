@@ -5,16 +5,20 @@ import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import { CartProvider } from "@/lib/cart/cart-context";
 import "./globals.css";
 
-const inter = Inter({
+// Manrope leads: its tighter apertures and geometric cut give headings a voice,
+// where Inter is deliberately neutral. Inter takes body and UI copy, which is the
+// job it was drawn for — it stays legible at the 12px caption floor where Manrope
+// starts to feel wide. Both families were already being loaded; only the roles swapped.
+const manrope = Manrope({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["500", "600", "700"],
 });
 
-const manrope = Manrope({
+const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 const geistMono = Geist_Mono({

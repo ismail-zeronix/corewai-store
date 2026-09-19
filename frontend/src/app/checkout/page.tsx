@@ -164,7 +164,7 @@ export default function CheckoutPage() {
                   A confirmation will be sent to {shipping.email || "your email"} and via WhatsApp.
                 </p>
 
-                <div className="mt-4 w-full rounded-2xl border border-border bg-white p-5 text-left sm:p-6">
+                <div className="mt-4 w-full rounded-xl border border-border bg-white p-5 text-left sm:p-6">
                   <h2 className="font-display text-base font-bold text-foreground">Order Summary</h2>
                   <OrderItemsList items={orderSnapshot.items} className="mt-4" />
 
@@ -208,13 +208,13 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div className="grid w-full grid-cols-3 gap-2 rounded-2xl border border-border bg-white p-4 sm:gap-4 sm:p-5">
+                <div className="grid w-full grid-cols-3 gap-2 rounded-xl border border-border bg-white p-4 sm:gap-4 sm:p-5">
                   {whatsNextSteps.map(({ icon: Icon, label }) => (
                     <div key={label} className="flex flex-col items-center gap-1.5 text-center">
                       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
                         <Icon className="h-4 w-4" strokeWidth={1.75} />
                       </span>
-                      <span className="text-[11px] font-medium text-foreground sm:text-xs">{label}</span>
+                      <span className="text-caption font-medium text-foreground ">{label}</span>
                     </div>
                   ))}
                 </div>
@@ -315,7 +315,7 @@ export default function CheckoutPage() {
                     This will just take a moment — please don&apos;t close this window.
                   </p>
 
-                  <div className="mt-4 flex w-full flex-col gap-4 rounded-2xl border border-border bg-white p-5 text-left sm:p-6">
+                  <div className="mt-4 flex w-full flex-col gap-4 rounded-xl border border-border bg-white p-5 text-left sm:p-6">
                     {processingStages.map((stage, index) => {
                       const isDone = index < processingStage;
                       const isCurrent = index === processingStage;
@@ -449,7 +449,7 @@ export default function CheckoutPage() {
           </div>
 
           <div className="mb-6 lg:hidden">
-            <Accordion className="rounded-2xl border border-border bg-white px-4">
+            <Accordion className="rounded-xl border border-border bg-white px-4">
               <AccordionItem value="order-summary">
                 <AccordionTrigger className="py-3.5 text-sm font-semibold text-foreground hover:no-underline">
                   <span className="flex flex-wrap items-baseline gap-x-1.5">
@@ -483,7 +483,7 @@ export default function CheckoutPage() {
           </div>
 
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_340px]">
-            <div className="rounded-2xl border border-border bg-white p-5 sm:p-6">
+            <div className="rounded-xl border border-border bg-white p-5 sm:p-6">
               {step === "shipping" && (
                 <form onSubmit={(event) => { event.preventDefault(); setStep("payment"); }} className="flex flex-col gap-4">
                   <h2 className="font-display text-lg font-bold text-foreground">Shipping Details</h2>
@@ -640,7 +640,7 @@ export default function CheckoutPage() {
               )}
             </div>
 
-            <div className="hidden rounded-2xl border border-border bg-white p-5 lg:block lg:sticky lg:top-24 lg:self-start">
+            <div className="hidden rounded-xl border border-border bg-white p-5 lg:block lg:sticky lg:top-24 lg:self-start">
               <h2 className="font-display text-base font-bold text-foreground">Order Summary</h2>
               <OrderItemsList items={items} className="mt-4" />
               <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4 text-sm">

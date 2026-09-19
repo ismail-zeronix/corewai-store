@@ -35,11 +35,11 @@ export function SiteFooter({ mobile = "full" }: { mobile?: "full" | "compact" | 
             </div>
             <nav aria-label="Footer shopping links">
               <h2 className="mb-2 text-sm font-semibold text-white">Explore the store</h2>
-              <ul>{shoppingLinks.map(({ href, label }) => <li key={href}><Link href={href} className="inline-flex min-h-11 items-center rounded-md text-sm hover:text-white">{label}</Link></li>)}</ul>
+              <ul>{shoppingLinks.map(({ href, label }) => <li key={href}><Link href={href} className="inline-flex min-h-11 items-center rounded-lg text-sm hover:text-white">{label}</Link></li>)}</ul>
             </nav>
             <nav aria-label="Footer categories">
               <h2 className="mb-2 text-sm font-semibold text-white">Shop by category</h2>
-              <ul className="grid grid-cols-2 gap-x-4 lg:grid-cols-1">{categories.slice(0, 8).map(({ slug, name }) => <li key={slug}><Link href={`/category/${slug}`} className="inline-flex min-h-11 items-center rounded-md text-sm hover:text-white">{name}</Link></li>)}</ul>
+              <ul className="grid grid-cols-2 gap-x-4 lg:grid-cols-1">{categories.slice(0, 8).map(({ slug, name }) => <li key={slug}><Link href={`/category/${slug}`} className="inline-flex min-h-11 items-center rounded-lg text-sm hover:text-white">{name}</Link></li>)}</ul>
             </nav>
           </div>
           <p className="mt-6 border-t border-white/20 pt-5 text-xs">© {new Date().getFullYear()} CoreWAI Supply. All rights reserved.</p>

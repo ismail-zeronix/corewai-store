@@ -49,7 +49,7 @@ export default function CartPage() {
               <OrderSummarySkeleton />
             </div>
           ) : items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-white px-6 py-20 text-center">
+            <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-white px-6 py-20 text-center">
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <ShoppingBag className="h-7 w-7" />
               </span>
@@ -143,7 +143,7 @@ export default function CartPage() {
                 ))}
               </div>
 
-              <div className="h-fit rounded-2xl border border-border bg-white p-5 lg:sticky lg:top-24 lg:self-start">
+              <div className="h-fit rounded-xl border border-border bg-white p-5 lg:sticky lg:top-24 lg:self-start">
                 <h2 className="font-display text-base font-bold text-foreground">Order Summary</h2>
                 <div className="mt-4 flex flex-col gap-2 text-sm">
                   <div className="flex justify-between text-muted-foreground">

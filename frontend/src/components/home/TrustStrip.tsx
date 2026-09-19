@@ -23,7 +23,7 @@ export function TrustStrip() {
             </span>
             <div>
               <p className="text-xs font-semibold leading-tight text-ink sm:text-sm">{title}</p>
-              <p className="text-[11px] leading-tight text-muted-foreground sm:text-xs">{subtitle}</p>
+              <p className="text-caption leading-tight text-muted-foreground ">{subtitle}</p>
             </div>
           </div>
         ))}

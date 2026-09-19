@@ -8,7 +8,7 @@ export function Hero() {
       <div className="grid gap-3 lg:grid-cols-3 lg:gap-4">
         <Link
           href="/products"
-          className="group relative flex aspect-[2/1] max-h-[220px] w-full items-end overflow-hidden rounded-xl bg-cloud md:aspect-[16/9] md:max-h-none lg:col-span-2 lg:aspect-auto lg:h-[420px] lg:rounded-3xl"
+          className="group relative flex aspect-[2/1] max-h-[220px] w-full items-end overflow-hidden rounded-xl bg-cloud md:aspect-[16/9] md:max-h-none lg:col-span-2 lg:aspect-auto lg:h-[420px] lg:rounded-xl"
         >
           <Image
             src="/images/hero/corewai-its-products-and-service.jpg"
@@ -35,7 +35,7 @@ export function Hero() {
         <div className="hidden lg:col-span-1 lg:flex lg:flex-col lg:gap-4">
           <Link
             href="/category/laptops"
-            className="group relative h-[202px] overflow-hidden rounded-3xl bg-cloud"
+            className="group relative h-[202px] overflow-hidden rounded-xl bg-cloud"
           >
             <Image
               src="/images/hero/all-in-one-pc-dubai.png"
@@ -50,7 +50,7 @@ export function Hero() {
           </Link>
           <Link
             href="/category/gaming"
-            className="group relative h-[202px] overflow-hidden rounded-3xl bg-cloud"
+            className="group relative h-[202px] overflow-hidden rounded-xl bg-cloud"
           >
             <Image
               src="/images/hero/rog-xbox-ally.jpg"

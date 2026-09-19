@@ -74,7 +74,7 @@ function SearchContent({ close, inputRef }: { close: () => void; inputRef: RefOb
           if (event.target.value.trim() !== trimmedQuery) setResponse(null);
         }}
           type="search" enterKeyHint="search" aria-label="Search products and brands" placeholder="Search products & brands"
-          className="h-11 w-full min-w-0 rounded-md bg-transparent px-2 text-base text-ink outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary" />
+          className="h-11 w-full min-w-0 rounded-lg bg-transparent px-2 text-base text-ink outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary" />
       </form>
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2" aria-busy={isPending}>
         <p role="status" className="sr-only">{isPending ? "Searching products" : error ? "Search unavailable" : trimmedQuery ? `${results.length} preview results` : "Start typing to search"}</p>

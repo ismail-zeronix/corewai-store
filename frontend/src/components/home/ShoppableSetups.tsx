@@ -50,7 +50,7 @@ function SetupCard({
   return (
     <Link
       href={`/category/${setupCategories[setup.id] ?? "more"}`}
-      className={`group flex flex-col justify-between rounded-2xl p-5 text-white transition-transform hover:-translate-y-0.5 ${color} ${
+      className={`group flex flex-col justify-between rounded-xl p-5 text-white transition-transform hover:-translate-y-0.5 ${color} ${
         featured ? "min-h-[280px]" : "min-h-[140px]"
       } ${className}`}
     >

@@ -24,7 +24,7 @@ export function FaqAndSearches() {
           </p>
         </div>
 
-        <Accordion className="mt-5 rounded-2xl border border-border bg-white px-2 shadow-sm sm:px-4">
+        <Accordion className="mt-5 rounded-xl border border-border bg-white px-2 shadow-sm sm:px-4">
           {faqs.map((faq, index) => {
             const Icon = iconMap[faq.icon];
             return (

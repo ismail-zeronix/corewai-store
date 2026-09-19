@@ -33,9 +33,9 @@ export default function CategoriesPage() {
                 <Link
                   key={category.slug}
                   href={`/category/${category.slug}`}
-                  className="group flex flex-col items-center gap-2.5 rounded-2xl border border-border bg-white p-5 text-center transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-elevated"
+                  className="group flex flex-col items-center gap-2.5 rounded-xl border border-border bg-white p-5 text-center transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-elevated"
                 >
-                  <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-mist transition-colors group-hover:bg-gradient-to-br group-hover:from-blue group-hover:to-cyan">
+                  <span className="flex h-16 w-16 items-center justify-center rounded-xl bg-mist transition-colors group-hover:bg-gradient-to-br group-hover:from-blue group-hover:to-cyan">
                     {Icon && (
                       <Icon
                         className="h-7 w-7 text-primary transition-colors group-hover:text-white"

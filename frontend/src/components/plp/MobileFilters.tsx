@@ -22,12 +22,12 @@ export function MobileFilters({ brands, priceBounds, activeCount }: MobileFilter
         <SlidersHorizontal className="h-4 w-4" />
         Filters
         {activeCount > 0 && (
-          <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-white">
+          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-caption font-semibold text-white">
             {activeCount}
           </span>
         )}
       </SheetTrigger>
-      <SheetContent side="bottom" className="mobile-sheet gap-0 rounded-t-2xl">
+      <SheetContent side="bottom" className="mobile-sheet gap-0 rounded-t-xl">
         <SheetHeader className="shrink-0 border-b border-border pr-16">
           <SheetTitle>Filters</SheetTitle>
           <SheetDescription>Narrow your selection by brand, price and availability.</SheetDescription>

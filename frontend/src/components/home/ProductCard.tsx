@@ -84,7 +84,7 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
 
           {label && (
             <span
-              className={`absolute left-2 top-2 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${badgeStyles[product.badge!]}`}
+              className={`absolute left-2 top-2 rounded-full px-2 py-0.5 text-caption font-semibold uppercase tracking-wide ${badgeStyles[product.badge!]}`}
             >
               {label}
             </span>
@@ -112,9 +112,9 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
         </div>
 
         <div>
-          <Link href={`/product/${product.slug}`} className="block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          <Link href={`/product/${product.slug}`} className="block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary">
           {product.brand && <p className="text-xs font-medium text-primary">{product.brand}</p>}
-          <h3 className="mt-0.5 line-clamp-2 font-display text-sm font-semibold leading-snug text-foreground sm:text-[15px]">
+          <h3 className="mt-0.5 line-clamp-2 font-display text-sm font-semibold leading-snug text-foreground">
             {product.name}
           </h3>
           </Link>
@@ -139,7 +139,7 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
           </div>
 
           {countdownLabel && (
-            <div className="mt-1.5 flex items-center gap-1 text-[11px] font-medium text-destructive sm:mt-2">
+            <div className="mt-1.5 flex items-center gap-1 text-caption font-medium text-destructive sm:mt-2">
               <Timer className="h-3 w-3" />
               <span className="font-mono tabular-nums">{countdownLabel}</span>
             </div>

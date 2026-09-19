@@ -28,7 +28,7 @@ export function MobileMoreMenu({ compact = false }: { compact?: boolean }) {
       )}>
         <Menu className="size-5" aria-hidden="true" />{!compact && "More"}
       </SheetTrigger>
-      <SheetContent side="bottom" className="mobile-sheet gap-0 rounded-t-2xl">
+      <SheetContent side="bottom" className="mobile-sheet gap-0 rounded-t-xl">
         <SheetHeader className="shrink-0 border-b border-mist pr-16"><SheetTitle className="font-semibold tracking-tight">Explore CoreWAI</SheetTitle></SheetHeader>
         <nav aria-label="More shopping links" className="min-h-0 overflow-y-auto overscroll-contain p-3">
           {moreLinks.map(({ label, href }) => (

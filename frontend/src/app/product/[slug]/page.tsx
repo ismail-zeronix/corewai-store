@@ -60,7 +60,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <SiteHeader />
       <main id="main-content" tabIndex={-1} className="product-page min-w-0 flex-1">
         <div className="mx-auto max-w-7xl px-4 py-1 md:px-6 md:py-4 lg:px-8">
-          <Link href={product.categorySlug ? `/category/${product.categorySlug}` : "/products"} className="inline-flex min-h-11 max-w-full items-center gap-1 rounded-md text-xs font-medium text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden">
+          <Link href={product.categorySlug ? `/category/${product.categorySlug}` : "/products"} className="inline-flex min-h-11 max-w-full items-center gap-1 rounded-lg text-xs font-medium text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden">
             <ChevronLeft className="size-4 shrink-0" aria-hidden="true" /><span className="truncate">{product.category || "All products"}</span>
           </Link>
           <div className="hidden md:block">

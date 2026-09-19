@@ -25,7 +25,7 @@ export function Reviews({ product }: ReviewsProps) {
       <p className="rounded-xl border border-border bg-cloud p-4 text-sm text-muted-foreground">These are sample reviews for preview purposes, not customer feedback.</p>
       <ReviewForm />
 
-      <div className="grid grid-cols-1 gap-6 rounded-2xl border border-border bg-white p-4 sm:grid-cols-[auto_1fr] sm:p-5">
+      <div className="grid grid-cols-1 gap-6 rounded-xl border border-border bg-white p-4 sm:grid-cols-[auto_1fr] sm:p-5">
         <div className="flex flex-col items-center justify-center gap-1 sm:border-r sm:border-border sm:pr-6">
           <span className="font-display text-3xl font-bold text-foreground">{average.toFixed(1)}</span>
           <div className="flex items-center gap-0.5">
@@ -66,7 +66,7 @@ export function Reviews({ product }: ReviewsProps) {
                 ))}
               </div>
               {review.verified && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-lime/20 px-2 py-0.5 text-[10px] font-semibold text-ink">
+                <span className="inline-flex items-center gap-1 rounded-full bg-lime/20 px-2 py-0.5 text-caption font-semibold text-ink">
                   <BadgeCheck className="h-3 w-3" />
                   Sample review
                 </span>

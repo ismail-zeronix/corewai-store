@@ -64,14 +64,14 @@ export function SiteHeader() {
   return (
     <header className="mobile-site-header sticky top-0 z-30 border-b border-mist bg-white md:static md:z-auto">
       <div className="flex h-14 items-center justify-between gap-3 px-4 md:hidden">
-        <Link href="/" aria-label="CoreWAI Supply home" className="flex min-h-11 items-center rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary">
+        <Link href="/" aria-label="CoreWAI Supply home" className="flex min-h-11 items-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary">
           <Image src="/corewai-logo.webp" alt="CoreWAI Supply" width={205} height={80} sizes="113px" priority className="h-11 w-auto object-contain" />
         </Link>
         <div className="ml-auto flex shrink-0 items-center gap-1">
           <SearchDialog />
           <Link href="/cart" aria-label={isHydrated ? `Cart, ${itemCount} items` : "Cart"} className="relative flex size-11 items-center justify-center rounded-lg text-ink outline-none hover:bg-cloud focus-visible:ring-2 focus-visible:ring-primary motion-safe:active:scale-95">
             <ShoppingCart className="size-5" aria-hidden="true" />
-            {isHydrated && itemCount > 0 && <span aria-hidden="true" className="absolute right-0 top-0.5 min-w-4 rounded-full bg-lime px-1 text-center text-[10px] font-semibold leading-4 text-ink">{itemCount > 99 ? "99+" : itemCount}</span>}
+            {isHydrated && itemCount > 0 && <span aria-hidden="true" className="absolute right-0 top-0.5 min-w-5 rounded-full bg-lime px-1 text-center text-caption font-semibold leading-5 text-ink">{itemCount > 99 ? "99+" : itemCount}</span>}
           </Link>
           <MobileMoreMenu compact />
         </div>
@@ -115,7 +115,7 @@ export function SiteHeader() {
           >
             <ShoppingCart className="h-5 w-5" />
             {isHydrated && itemCount > 0 && (
-              <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-lime text-[10px] font-bold text-ink">
+              <span className="absolute right-1 top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-lime px-1 text-caption font-bold text-ink">
                 {itemCount > 99 ? "99+" : itemCount}
               </span>
             )}

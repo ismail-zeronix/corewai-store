@@ -26,7 +26,7 @@ export function PromoBanners() {
             />
             <div className={`absolute inset-0 bg-gradient-to-r ${themeStyles[banner.theme]}`} />
             <div className="relative p-4 text-white sm:p-8">
-              <p className="text-[11px] font-bold uppercase tracking-widest text-lime sm:text-xs">
+              <p className="text-caption font-bold uppercase tracking-widest text-lime ">
                 {banner.eyebrow}
               </p>
               <h3 className="mt-1 max-w-xs text-balance font-display text-base font-semibold leading-tight sm:text-xl">
