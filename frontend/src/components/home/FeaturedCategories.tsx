@@ -1,33 +1,51 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { featuredCategories } from "@/lib/placeholder-data";
+import { ArrowRight } from "lucide-react";
+import { SectionHeading } from "@/components/ui/heading";
+import { getCategories } from "@/lib/vendure/collections";
 
-export function FeaturedCategories() {
+/**
+ * Real Vendure collections, with real product counts.
+ *
+ * This replaced a nine-entry hardcoded list ("All-in-One PC", "Mini PC", "NAS &
+ * Storage"…) that matched nothing in the catalogue and linked to empty pages. The whole
+ * section removes itself when there are no collections, rather than rendering a rail of
+ * dead links.
+ */
+export async function FeaturedCategories() {
+  const categories = await getCategories();
+  if (categories.length === 0) return null;
+
   return (
-    <section className="mx-auto max-w-7xl px-4 py-5 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-      <div className="grid grid-cols-4 gap-2 sm:grid-cols-5 sm:gap-3 lg:grid-cols-9">
-        {featuredCategories.map((category) => (
-          <Link key={category.slug} href={`/category/${category.slug}`} className="group">
-            <Card
-              size="sm"
-              className="items-center gap-2 rounded-xl py-2 text-center transition-all hover:-translate-y-0.5 hover:ring-primary/30 hover:shadow-elevated sm:py-3"
-            >
-              <CardContent className="flex w-full flex-col items-center gap-1.5 px-2 sm:gap-2 sm:px-3">
-                <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-background">
-                  <Image
-                    src={category.image}
-                    alt={category.name}
-                    fill
-                    className="object-contain transition-transform duration-300 group-hover:scale-105"
-                    sizes="(min-width: 1024px) 11vw, (min-width: 640px) 20vw, 25vw"
-                  />
-                </div>
-                <div className="w-full">
-                  <h3 className="line-clamp-2 min-h-8 text-xs font-semibold text-foreground sm:text-sm">{category.name}</h3>
-                </div>
-              </CardContent>
-            </Card>
+    <section className="mx-auto max-w-7xl px-4 section-y-tight sm:px-6 lg:px-8">
+      <div className="mb-5 flex items-end justify-between gap-4">
+        <SectionHeading>Shop by category</SectionHeading>
+        <Link
+          href="/categories"
+          className="shrink-0 rounded-lg text-body-sm font-medium text-primary hover:underline"
+        >
+          All categories
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+        {categories.map((category) => (
+          <Link
+            key={category.slug}
+            href={`/category/${category.slug}`}
+            className="group flex items-center justify-between gap-3 rounded-xl bg-white px-5 py-4 shadow-soft ring-1 ring-black/[0.04] transition-shadow hover:shadow-elevated"
+          >
+            <span className="min-w-0">
+              <span className="block truncate font-display text-body font-semibold text-foreground">
+                {category.name}
+              </span>
+              <span className="text-caption tabular-nums text-muted-foreground">
+                {category.productCount} {category.productCount === 1 ? "product" : "products"}
+              </span>
+            </span>
+            <ArrowRight
+              className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
+              aria-hidden="true"
+            />
           </Link>
         ))}
       </div>

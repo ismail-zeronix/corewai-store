@@ -8,101 +8,78 @@ import { SortSelect } from "@/components/plp/SortSelect";
 import { ActiveFilters } from "@/components/plp/ActiveFilters";
 import { ProductGrid } from "@/components/plp/ProductGrid";
 import { Pagination } from "@/components/plp/Pagination";
-import { getProducts } from "@/lib/vendure/products";
-import { sortProducts } from "@/lib/plp/sort";
-import { filterByPrice, filterInStock, getPriceBounds } from "@/lib/plp/filters";
-
-const PAGE_SIZE = 12;
-// Vendure's shop API list queries reject `take` above 100 (shopListQueryLimit
-// default) — 200 would 400 the whole request, so this is the real ceiling.
-const MAX_PRODUCTS_TAKE = 100;
+import { loadPlpData, type PlpSearchParams } from "@/lib/plp/query";
 
 export const metadata: Metadata = {
   title: "All Products — CoreWAI Supply",
-  description: "Browse the full CoreWAI Supply catalogue of electronics, home & kitchen, and lifestyle gadgets.",
+  description:
+    "Browse the full CoreWAI Supply catalogue of laptops, desktops and IT hardware.",
 };
 
 interface ProductsPageProps {
-  searchParams: Promise<{
-    brand?: string;
-    sort?: string;
-    minPrice?: string;
-    maxPrice?: string;
-    inStock?: string;
-    page?: string;
-  }>;
+  searchParams: Promise<PlpSearchParams>;
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-  const { brand, sort, minPrice, maxPrice, inStock, page } = await searchParams;
-  const allProducts = await getProducts(MAX_PRODUCTS_TAKE);
-
-  const brands = Array.from(new Set(allProducts.map((p) => p.brand).filter(Boolean))).sort();
-  const priceBounds = getPriceBounds(allProducts);
-
-  const activeBrands = brand?.split(",").filter(Boolean) ?? [];
-  const minPriceValue = minPrice ? Number(minPrice) : undefined;
-  const maxPriceValue = maxPrice ? Number(maxPrice) : undefined;
-  const inStockOnly = inStock === "1";
-
-  let filtered = activeBrands.length > 0 ? allProducts.filter((p) => activeBrands.includes(p.brand)) : allProducts;
-  filtered = filterByPrice(filtered, minPriceValue, maxPriceValue);
-  filtered = filterInStock(filtered, inStockOnly);
-  filtered = sortProducts(filtered, sort);
-
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const parsedPage = Number(page);
-  const requestedPage = Number.isFinite(parsedPage) ? Math.floor(parsedPage) : 1;
-  const currentPage = Math.min(Math.max(requestedPage, 1), totalPages);
-  const pageProducts = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
-
-  const activeFilterCount =
-    (activeBrands.length > 0 ? 1 : 0) + (minPrice || maxPrice ? 1 : 0) + (inStockOnly ? 1 : 0);
+  const params = await searchParams;
+  const { products, facets, totalItems, currentPage, totalPages, priceBounds, activeFilterCount } =
+    await loadPlpData(params);
 
   return (
     <>
       <main id="main-content" tabIndex={-1} className="flex-1">
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "All Products" }]} />
-        </div>
+        <div className="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-8">
+          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "All products" }]} />
 
-        <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h1 className="font-display text-xl font-semibold text-foreground sm:text-2xl">
-                All Products
-              </h1>
-              <p className="mt-1 text-sm text-muted-foreground">{filtered.length} products</p>
-            </div>
+          <div className="mb-8 mt-4">
+            <h1 className="font-display text-h1 font-semibold tracking-tight text-foreground">
+              All products
+            </h1>
+            <p className="mt-1 text-body-sm text-muted-foreground">
+              {totalItems} {totalItems === 1 ? "product" : "products"}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[220px_1fr]">
-            <aside aria-label="Product filters" className="hidden h-fit rounded-xl border border-border bg-white p-4 lg:block">
+          <div className="grid grid-cols-1 gap-10 pb-16 lg:grid-cols-[240px_1fr]">
+            <aside
+              aria-label="Product filters"
+              className="hidden h-fit lg:sticky lg:top-24 lg:block"
+            >
               <Suspense fallback={null}>
-                <Filters brands={brands} priceBounds={priceBounds} />
+                <Filters facets={facets} priceBounds={priceBounds} />
               </Suspense>
             </aside>
 
             <div className="min-w-0">
               <div className="mb-4 flex items-center justify-between gap-3 lg:justify-end">
                 <Suspense fallback={null}>
-                  <MobileFilters brands={brands} priceBounds={priceBounds} activeCount={activeFilterCount} />
+                  <MobileFilters
+                    facets={facets}
+                    priceBounds={priceBounds}
+                    activeCount={activeFilterCount}
+                  />
                 </Suspense>
                 <Suspense fallback={null}>
                   <SortSelect />
                 </Suspense>
               </div>
-              <Suspense fallback={null}><ActiveFilters /></Suspense>
+              <Suspense fallback={null}>
+                <ActiveFilters facets={facets} />
+              </Suspense>
               <ProductGrid
-                products={pageProducts}
-                emptyTitle={allProducts.length > 0 ? "No matching products" : "No products available yet"}
-                emptyDescription={allProducts.length > 0 ? "Try adjusting your filters to find more products." : "Our catalogue is still being stocked. Check back soon for new arrivals."}
+                products={products}
+                emptyTitle={activeFilterCount > 0 ? "No matching products" : "No products available yet"}
+                emptyDescription={
+                  activeFilterCount > 0
+                    ? "Try removing a filter to see more."
+                    : "Our catalogue is still being stocked. Check back soon."
+                }
               />
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 basePath="/products"
-                searchParams={{ brand, sort, minPrice, maxPrice, inStock }}
+                searchParams={params}
               />
             </div>
           </div>

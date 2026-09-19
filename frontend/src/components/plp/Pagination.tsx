@@ -11,6 +11,9 @@ interface PaginationProps {
 function buildHref(basePath: string, searchParams: Record<string, string | undefined>, page: number): string {
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(searchParams)) {
+    // Never carry the incoming page through: callers now pass the whole search-params
+    // object, so a stale `page=3` would survive and make the "1" link point at page 3.
+    if (key === "page") continue;
     if (value) params.set(key, value);
   }
   if (page > 1) {

@@ -1,11 +1,17 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
+import { Filters } from "@/components/plp/Filters";
+import { MobileFilters } from "@/components/plp/MobileFilters";
+import { SortSelect } from "@/components/plp/SortSelect";
+import { ActiveFilters } from "@/components/plp/ActiveFilters";
 import { ProductGrid } from "@/components/plp/ProductGrid";
-import { getProducts, filterProducts } from "@/lib/vendure/products";
+import { Pagination } from "@/components/plp/Pagination";
+import { loadPlpData, type PlpSearchParams } from "@/lib/plp/query";
 
 interface SearchPageProps {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<PlpSearchParams>;
 }
 
 export async function generateMetadata({ searchParams }: SearchPageProps): Promise<Metadata> {
@@ -14,42 +20,92 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const { q } = await searchParams;
-  const query = (q ?? "").trim();
+  const params = await searchParams;
+  const query = (params.q ?? "").trim();
 
-  const allProducts = query ? await getProducts(60) : [];
-  const results = filterProducts(allProducts, query);
+  // Results now come from Vendure's search index: real relevance ranking, facets and
+  // pagination, instead of a substring match over a capped client-side fetch.
+  const { products, facets, totalItems, currentPage, totalPages, priceBounds, activeFilterCount } =
+    query
+      ? await loadPlpData(params, { term: query })
+      : {
+          products: [],
+          facets: [],
+          totalItems: 0,
+          currentPage: 1,
+          totalPages: 1,
+          priceBounds: { min: 0, max: 0 },
+          activeFilterCount: 0,
+        };
 
   return (
     <>
       <main id="main-content" tabIndex={-1} className="flex-1">
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Search" }]} />
-        </div>
 
-        <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
-          <h1 className="mb-1 font-display text-xl font-semibold text-foreground sm:text-2xl">
-            {query ? (
-              <>
-                Search results for <span className="text-primary">&ldquo;{query}&rdquo;</span>
-              </>
-            ) : (
-              "Search"
-            )}
-          </h1>
-          <p className="mb-6 text-sm text-muted-foreground">
-            {query ? `${results.length} products found` : "Enter a search term to find products."}
-          </p>
+          <div className="mb-8 mt-4">
+            <h1 className="font-display text-h1 font-semibold tracking-tight text-foreground">
+              {query ? `Results for “${query}”` : "Search"}
+            </h1>
+            <p className="mt-1 text-body-sm text-muted-foreground">
+              {query
+                ? `${totalItems} ${totalItems === 1 ? "product" : "products"}`
+                : "Search the catalogue by product name or brand."}
+            </p>
+          </div>
 
-          <ProductGrid
-            products={results}
-            emptyTitle={query ? `No results for "${query}"` : "Start searching"}
-            emptyDescription={
-              query
-                ? "Try a different keyword, or browse our full catalogue."
-                : "Use the search bar above to find products by name or brand."
-            }
-          />
+          {query && (
+            <div className="grid grid-cols-1 gap-10 pb-16 lg:grid-cols-[240px_1fr]">
+              <aside
+                aria-label="Search filters"
+                className="hidden h-fit lg:sticky lg:top-24 lg:block"
+              >
+                <Suspense fallback={null}>
+                  <Filters facets={facets} priceBounds={priceBounds} />
+                </Suspense>
+              </aside>
+
+              <div className="min-w-0">
+                <div className="mb-4 flex items-center justify-between gap-3 lg:justify-end">
+                  <Suspense fallback={null}>
+                    <MobileFilters
+                      facets={facets}
+                      priceBounds={priceBounds}
+                      activeCount={activeFilterCount}
+                    />
+                  </Suspense>
+                  <Suspense fallback={null}>
+                    <SortSelect />
+                  </Suspense>
+                </div>
+                <Suspense fallback={null}>
+                  <ActiveFilters facets={facets} />
+                </Suspense>
+                <ProductGrid
+                  products={products}
+                  emptyTitle={`No results for “${query}”`}
+                  emptyDescription="Try a different keyword, or browse the full catalogue."
+                />
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  basePath="/search"
+                  searchParams={params}
+                />
+              </div>
+            </div>
+          )}
+
+          {!query && (
+            <div className="pb-16">
+              <ProductGrid
+                products={[]}
+                emptyTitle="Start searching"
+                emptyDescription="Use the search bar above to find products by name or brand."
+              />
+            </div>
+          )}
         </div>
       </main>
       <WhatsAppButton />

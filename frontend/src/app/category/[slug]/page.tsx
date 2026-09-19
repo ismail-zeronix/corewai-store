@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
 import { Filters } from "@/components/plp/Filters";
@@ -8,125 +9,95 @@ import { SortSelect } from "@/components/plp/SortSelect";
 import { ActiveFilters } from "@/components/plp/ActiveFilters";
 import { ProductGrid } from "@/components/plp/ProductGrid";
 import { Pagination } from "@/components/plp/Pagination";
-import { getProducts } from "@/lib/vendure/products";
-import { sortProducts } from "@/lib/plp/sort";
-import { filterByPrice, filterInStock, getPriceBounds } from "@/lib/plp/filters";
-import { categories } from "@/lib/placeholder-data";
-
-const PAGE_SIZE = 12;
-// Vendure's shop API list queries reject `take` above 100 (shopListQueryLimit
-// default) — 200 would 400 the whole request, so this is the real ceiling.
-const MAX_PRODUCTS_TAKE = 100;
+import { loadPlpData, type PlpSearchParams } from "@/lib/plp/query";
+import { getCategories } from "@/lib/vendure/collections";
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{
-    brand?: string;
-    sort?: string;
-    minPrice?: string;
-    maxPrice?: string;
-    inStock?: string;
-    page?: string;
-  }>;
-}
-
-function titleCase(slug: string) {
-  return slug
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  searchParams: Promise<PlpSearchParams>;
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const category = categories.find((c) => c.slug === slug);
-  const name = category?.name ?? titleCase(slug);
+  const category = (await getCategories()).find((c) => c.slug === slug);
+  if (!category) return { title: "Category not found — CoreWAI Supply" };
   return {
-    title: `${name} — CoreWAI Supply`,
-    description: `Shop ${name} at CoreWAI Supply — fast UAE delivery, official warranty, pay your way.`,
+    title: `${category.name} — CoreWAI Supply`,
+    description: `Shop ${category.name} at CoreWAI Supply — fast UAE delivery, official warranty, pay your way.`,
   };
 }
 
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const { slug } = await params;
-  const { brand, sort, minPrice, maxPrice, inStock, page } = await searchParams;
-  const category = categories.find((c) => c.slug === slug);
-  const categoryName = category?.name ?? titleCase(slug);
+  const queryParams = await searchParams;
 
-  const allProducts = await getProducts(MAX_PRODUCTS_TAKE);
-  const categoryProducts = allProducts.filter(
-    (p) => p.categorySlug === slug || p.category.toLowerCase() === categoryName.toLowerCase(),
-  );
+  // Categories are real collections now. A slug with no collection behind it is a 404
+  // rather than an empty page — the old hardcoded list produced 17 of those.
+  const category = (await getCategories()).find((c) => c.slug === slug);
+  if (!category) {
+    notFound();
+  }
 
-  const brands = Array.from(new Set(categoryProducts.map((p) => p.brand).filter(Boolean))).sort();
-  const priceBounds = getPriceBounds(categoryProducts);
-
-  const activeBrands = brand?.split(",").filter(Boolean) ?? [];
-  const minPriceValue = minPrice ? Number(minPrice) : undefined;
-  const maxPriceValue = maxPrice ? Number(maxPrice) : undefined;
-  const inStockOnly = inStock === "1";
-
-  let filtered =
-    activeBrands.length > 0 ? categoryProducts.filter((p) => activeBrands.includes(p.brand)) : categoryProducts;
-  filtered = filterByPrice(filtered, minPriceValue, maxPriceValue);
-  filtered = filterInStock(filtered, inStockOnly);
-  filtered = sortProducts(filtered, sort);
-
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const parsedPage = Number(page);
-  const requestedPage = Number.isFinite(parsedPage) ? Math.floor(parsedPage) : 1;
-  const currentPage = Math.min(Math.max(requestedPage, 1), totalPages);
-  const pageProducts = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
-
-  const activeFilterCount =
-    (activeBrands.length > 0 ? 1 : 0) + (minPrice || maxPrice ? 1 : 0) + (inStockOnly ? 1 : 0);
+  const { products, facets, totalItems, currentPage, totalPages, priceBounds, activeFilterCount } =
+    await loadPlpData(queryParams, { collectionSlug: slug });
 
   return (
     <>
       <main id="main-content" tabIndex={-1} className="flex-1">
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-8">
           <Breadcrumb
-            items={[{ label: "Home", href: "/" }, { label: "Categories", href: "/categories" }, { label: categoryName }]}
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Categories", href: "/categories" },
+              { label: category.name },
+            ]}
           />
-        </div>
 
-        <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h1 className="font-display text-xl font-semibold text-foreground sm:text-2xl">
-                {categoryName}
-              </h1>
-              <p className="mt-1 text-sm text-muted-foreground">{filtered.length} products</p>
-            </div>
+          <div className="mb-8 mt-4">
+            <h1 className="font-display text-h1 font-semibold tracking-tight text-foreground">
+              {category.name}
+            </h1>
+            <p className="mt-1 text-body-sm text-muted-foreground">
+              {totalItems} {totalItems === 1 ? "product" : "products"}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[220px_1fr]">
-            <aside aria-label="Product filters" className="hidden h-fit rounded-xl border border-border bg-white p-4 lg:block">
+          <div className="grid grid-cols-1 gap-10 pb-16 lg:grid-cols-[240px_1fr]">
+            <aside
+              aria-label="Product filters"
+              className="hidden h-fit lg:sticky lg:top-24 lg:block"
+            >
               <Suspense fallback={null}>
-                <Filters brands={brands} priceBounds={priceBounds} />
+                <Filters facets={facets} priceBounds={priceBounds} />
               </Suspense>
             </aside>
 
             <div className="min-w-0">
               <div className="mb-4 flex items-center justify-between gap-3 lg:justify-end">
                 <Suspense fallback={null}>
-                  <MobileFilters brands={brands} priceBounds={priceBounds} activeCount={activeFilterCount} />
+                  <MobileFilters
+                    facets={facets}
+                    priceBounds={priceBounds}
+                    activeCount={activeFilterCount}
+                  />
                 </Suspense>
                 <Suspense fallback={null}>
                   <SortSelect />
                 </Suspense>
               </div>
-              <Suspense fallback={null}><ActiveFilters /></Suspense>
+              <Suspense fallback={null}>
+                <ActiveFilters facets={facets} />
+              </Suspense>
               <ProductGrid
-                products={pageProducts}
-                emptyTitle={categoryProducts.length ? "No matching products" : `No products in ${categoryName} yet`}
-                emptyDescription={categoryProducts.length ? "Try adjusting your filters to find more products." : "Explore the full catalogue while we stock this category."}
+                products={products}
+                emptyTitle="No matching products"
+                emptyDescription="Try removing a filter to see more."
               />
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 basePath={`/category/${slug}`}
-                searchParams={{ brand, sort, minPrice, maxPrice, inStock }}
+                searchParams={queryParams}
               />
             </div>
           </div>

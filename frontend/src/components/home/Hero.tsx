@@ -2,67 +2,51 @@ import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
+/**
+ * The previous hero overlaid a headline, an eyebrow and a CTA on top of a marketing
+ * banner that already had its own headline and its own CTA baked into the pixels, so the
+ * two collided at every width. It also carried two side tiles pointing at category pages
+ * that returned nothing.
+ *
+ * This uses a clean product lineup shot instead — hardware weighted right, open space
+ * left — so real type can sit in the image rather than fight it. The image is light, so
+ * the headline is ink on a light wash rather than white on the usual dark scrim. The wash
+ * is a flat tint sampled from the image's own left edge and carried across with one
+ * horizontal fade, purely so the text keeps contrast at any crop.
+ */
 export function Hero() {
   return (
-    <section className="mx-auto max-w-7xl px-4 pt-3 sm:px-6 sm:pt-4 lg:px-8 lg:pt-6">
-      <div className="grid gap-3 lg:grid-cols-3 lg:gap-4">
-        <Link
-          href="/products"
-          className="group relative flex aspect-[2/1] max-h-[220px] w-full items-end overflow-hidden rounded-xl bg-cloud md:aspect-[16/9] md:max-h-none lg:col-span-2 lg:aspect-auto lg:h-[420px] lg:rounded-xl"
-        >
+    <section className="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-8">
+      <div className="relative overflow-hidden rounded-xl bg-[#e8f1fb]">
+        <div className="absolute inset-0">
           <Image
-            src="/images/hero/corewai-its-products-and-service.jpg"
-            alt="CoreWAI IT products and services, featuring laptops, desktops and networking equipment"
+            src="/images/hero/asus-zenbook-14.jpg"
+            alt="Laptops, desktops, workstations, servers and networking hardware"
             fill
             priority
-            sizes="(min-width: 1280px) 800px, (min-width: 1024px) 66vw, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
-            className="object-cover object-center motion-safe:transition-transform motion-safe:duration-500 md:group-hover:scale-[1.03]"
+            sizes="(min-width: 1280px) 1216px, 100vw"
+            className="object-cover object-[78%_center] md:object-right"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
-          <div className="relative p-4 max-[340px]:p-3 md:p-8 lg:p-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-lime">
-              Tech for work and home
-            </p>
-            <h1 className="mt-2 max-w-md text-balance font-display text-2xl font-semibold leading-tight tracking-tight text-white max-[340px]:mt-1 max-[340px]:text-xl md:text-4xl lg:text-5xl">
-              Built for the next level
-            </h1>
-            <span className={buttonVariants({ size: "lg", className: "mt-3 max-[340px]:mt-2 md:mt-5" })}>
-              Explore products
-            </span>
-          </div>
-        </Link>
+          {/* The wash runs top-to-bottom on phones and left-to-right from md up, following
+              where the text actually sits. A single horizontal ramp left the body copy
+              lying across network switches at 390px. Long, even stops either way — a
+              short ramp leaves a visible seam that reads as two images butted together. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#e8f1fb] from-42% via-[#e8f1fb]/75 via-58% to-transparent to-76% md:bg-gradient-to-r md:from-25% md:via-[#e8f1fb]/70 md:via-45% md:to-transparent md:to-80%" />
+        </div>
 
-        <div className="hidden lg:col-span-1 lg:flex lg:flex-col lg:gap-4">
-          <Link
-            href="/category/laptops"
-            className="group relative h-[202px] overflow-hidden rounded-xl bg-cloud"
-          >
-            <Image
-              src="/images/hero/all-in-one-pc-dubai.png"
-              alt="Laptops, desktops and networking gear"
-              fill
-              sizes="33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            />
-            <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-foreground">
-              Laptops & Desktops
-            </span>
-          </Link>
-          <Link
-            href="/category/gaming"
-            className="group relative h-[202px] overflow-hidden rounded-xl bg-cloud"
-          >
-            <Image
-              src="/images/hero/rog-xbox-ally.jpg"
-              alt="ROG Xbox Ally-KJP — Republic of Gamers in alliance with Kojima Productions"
-              fill
-              sizes="33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            />
-            <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-foreground">
-              ROG Flow Z13
-            </span>
-          </Link>
+        <div className="relative flex min-h-[400px] flex-col justify-start p-6 sm:min-h-[440px] sm:p-10 md:justify-center lg:min-h-[480px] lg:p-14">
+          <h1 className="max-w-[15ch] text-balance font-display text-display font-semibold text-ink">
+            IT hardware, ready to ship
+          </h1>
+          <p className="mt-4 max-w-[34ch] text-body text-ink/70">
+            Laptops, workstations and networking from ASUS, Lenovo, HP and Acer — with
+            official UAE warranty.
+          </p>
+          <div className="mt-7">
+            <Link href="/products" className={buttonVariants({ size: "touch" })}>
+              Shop all products
+            </Link>
+          </div>
         </div>
       </div>
     </section>

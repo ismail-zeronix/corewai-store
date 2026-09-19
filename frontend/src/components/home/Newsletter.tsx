@@ -1,15 +1,25 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 export function Newsletter() {
   return (
-    <section className="bg-ink py-6 sm:py-10">
-      <div className="mx-auto flex max-w-7xl flex-col items-start gap-4 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+    <section className="bg-ink section-y-tight">
+      <div className="mx-auto flex max-w-7xl flex-col items-start gap-5 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <div>
-          <h2 className="font-display text-lg font-semibold text-white sm:text-xl">Discover something new</h2>
-          <p className="mt-1 text-sm text-white/75">Explore the latest additions to CoreWAI Supply.</p>
+          <h2 className="font-display text-h2 font-semibold tracking-tight text-white">
+            New stock, first
+          </h2>
+          <p className="mt-1 text-body-sm text-white/70">
+            See what landed most recently at CoreWAI Supply.
+          </p>
         </div>
-        <Link href="/new-arrivals" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg bg-lime px-5 text-sm font-semibold text-ink hover:bg-lime/90">Shop new arrivals<ArrowRight className="size-4" aria-hidden="true" /></Link>
+        {/* White, not lime. Lime is reserved for price drops so it keeps its meaning;
+            here it was just "the bright colour" on a dark band. */}
+        <Link
+          href="/new-arrivals"
+          className="inline-flex min-h-11 shrink-0 items-center rounded-lg bg-white px-5 text-body-sm font-semibold text-ink hover:bg-white/90"
+        >
+          Shop new arrivals
+        </Link>
       </div>
     </section>
   );

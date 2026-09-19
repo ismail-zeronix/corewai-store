@@ -8,19 +8,27 @@ import {
 } from "@/components/ui/accordion";
 import { SectionHeading, Eyebrow } from "@/components/ui/heading";
 import { iconMap } from "@/lib/icon-map";
-import { faqs, popularSearches } from "@/lib/placeholder-data";
+import { faqs } from "@/lib/placeholder-data";
+import { searchProducts } from "@/lib/vendure/search";
 
-export function FaqAndSearches() {
+export async function FaqAndSearches() {
+  // Search suggestions built from the facets the catalogue actually has, so every chip
+  // returns results. They used to be a hardcoded list — "4K Smart TVs", "Air Fryers",
+  // "PlayStation 5" — none of which matched a single product.
+  const { facets } = await searchProducts({ take: 1 });
+  const popularSearches = facets
+    .flatMap((facet) => facet.values)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8)
+    .map((value) => value.name);
+
   return (
-    <section className="bg-mist/30 py-6 sm:py-8 lg:py-14">
+    <section className="bg-mist/30 section-y">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <Eyebrow>Good to know</Eyebrow>
-          <SectionHeading size="sm" className="mt-1">
-            Frequently Asked Questions
-          </SectionHeading>
+          <SectionHeading>Frequently asked questions</SectionHeading>
           <p className="mt-2 hidden text-sm text-muted-foreground sm:block">
-            Ordering electronics, appliances, and gadgets in the UAE — answered.
+            Ordering IT hardware in the UAE — answered.
           </p>
         </div>
 
@@ -45,7 +53,8 @@ export function FaqAndSearches() {
           })}
         </Accordion>
 
-        <div className="mt-8 border-t border-border pt-6">
+        {popularSearches.length > 0 && (
+        <div className="mt-10 border-t border-border pt-8">
           <div className="mb-3 flex items-center justify-center gap-2">
             <Search className="h-4 w-4 text-muted-foreground" />
             <Eyebrow className="text-muted-foreground">Popular searches</Eyebrow>
@@ -55,13 +64,14 @@ export function FaqAndSearches() {
               <Link
                 key={term}
                 href={`/search?q=${encodeURIComponent(term)}`}
-                className="inline-flex min-h-11 items-center rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary sm:text-sm"
+                className="inline-flex min-h-11 items-center rounded-full border border-border bg-white px-3.5 py-1.5 text-body-sm font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
                 {term}
               </Link>
             ))}
           </div>
         </div>
+        )}
       </div>
     </section>
   );
