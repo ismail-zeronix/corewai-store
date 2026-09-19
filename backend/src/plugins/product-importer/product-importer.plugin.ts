@@ -3,11 +3,12 @@ import { PluginCommonModule, VendurePlugin } from '@vendure/core';
 import { adminApiExtensions } from './api/api-extensions';
 import { ProductImporterResolver } from './api/product-importer.resolver';
 import { AssetImportService } from './services/asset-import.service';
+import { CatalogueTaxonomyService } from './services/catalogue-taxonomy.service';
 import { ProductScraperService } from './services/product-scraper.service';
 
 @VendurePlugin({
     imports: [PluginCommonModule],
-    providers: [ProductScraperService, AssetImportService],
+    providers: [ProductScraperService, AssetImportService, CatalogueTaxonomyService],
     adminApiExtensions: {
         schema: adminApiExtensions,
         resolvers: [ProductImporterResolver],
