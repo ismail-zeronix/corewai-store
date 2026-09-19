@@ -1,4 +1,3 @@
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { FiltersSkeleton } from "@/components/plp/FiltersSkeleton";
 import { ProductGridSkeleton } from "@/components/plp/ProductGridSkeleton";
@@ -28,7 +27,6 @@ export default function Loading() {
           </div>
         </div>
       </main>
-      <SiteFooter />
       <WhatsAppButton />
     </>
   );

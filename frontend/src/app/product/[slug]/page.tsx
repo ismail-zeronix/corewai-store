@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ShieldCheck, Truck, Lock, RotateCcw, Star, ChevronLeft, MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { ProductRail } from "@/components/home/ProductRail";
 import { formatAed } from "@/lib/format";
@@ -164,7 +163,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
           )}
         </div>
       </main>
-      <SiteFooter mobile="hidden" />
       <WhatsAppButton />
     </>
   );

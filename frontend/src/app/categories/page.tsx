@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
 import { categories } from "@/lib/placeholder-data";
@@ -48,7 +47,6 @@ export default function CategoriesPage() {
           </div>
         </div>
       </main>
-      <SiteFooter />
       <WhatsAppButton />
     </>
   );

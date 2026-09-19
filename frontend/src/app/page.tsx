@@ -10,7 +10,6 @@ import { TodaysDeals } from "@/components/home/TodaysDeals";
 import { Newsletter } from "@/components/home/Newsletter";
 import { ShoppableSetups } from "@/components/home/ShoppableSetups";
 import { FaqAndSearches } from "@/components/home/FaqAndSearches";
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { getProducts } from "@/lib/vendure/products";
 
@@ -35,7 +34,6 @@ export default async function Home() {
         <Newsletter />
       </main>
 
-      <SiteFooter />
       <WhatsAppButton />
     </>
   );

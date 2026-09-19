@@ -1,4 +1,3 @@
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { ScrollRow } from "@/components/ui/scroll-row";
 import { ProductCardSkeleton } from "@/components/plp/ProductCardSkeleton";
@@ -44,7 +43,6 @@ export default function Loading() {
           </div>
         </section>
       </main>
-      <SiteFooter />
       <WhatsAppButton />
     </>
   );

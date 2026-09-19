@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
 import { Filters } from "@/components/plp/Filters";
@@ -133,7 +132,6 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           </div>
         </div>
       </main>
-      <SiteFooter />
       <WhatsAppButton />
     </>
   );

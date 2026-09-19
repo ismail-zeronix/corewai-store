@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { MobileNavigation } from "@/components/home/MobileNavigation";
 import { PromoStrip } from "@/components/home/PromoStrip";
 import { SiteHeader } from "@/components/home/SiteHeader";
+import { SiteFooter } from "@/components/home/SiteFooter";
 import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import { CartProvider } from "@/lib/cart/cart-context";
 import { getCategories } from "@/lib/vendure/collections";
@@ -57,6 +58,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <CartProvider>
           <SiteHeader categories={categories} />
           {children}
+          <SiteFooter />
           <MobileNavigation />
         </CartProvider>
       </body>

@@ -65,7 +65,9 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
   return (
     <Card size="sm" className="h-full min-w-0 gap-2 hover:shadow-elevated sm:gap-3">
       <CardContent className="flex flex-col gap-2 sm:gap-3">
-        <div className="group relative aspect-square overflow-hidden rounded-lg bg-background active:scale-[0.98] transition-transform">
+        {/* White, not cloud: supplier product shots are cut out on white, so a tinted
+            tile drew a visible grey frame around each one. */}
+        <div className="group relative aspect-square overflow-hidden rounded-lg bg-white active:scale-[0.98] transition-transform">
           <Link href={`/product/${product.slug}`} aria-label={product.name} className="block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary">
           <div
             className="flex h-full w-full transition-transform duration-300 ease-out"
@@ -108,9 +110,11 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
                     e.stopPropagation();
                     setActiveImage(index);
                   }}
-                  className="flex size-11 items-center justify-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                  className="flex size-9 items-center justify-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
                 >
-                  <span className={cn("h-1.5 rounded-full shadow-sm", index === activeImage ? "w-4 bg-primary" : "w-1.5 bg-ink/30")} />
+                  {/* Neutral, not brand blue: on a full grid these dots repeated the
+                      action colour dozens of times for a secondary affordance. */}
+                  <span className={cn("size-1.5 rounded-full transition-colors", index === activeImage ? "bg-ink/70" : "bg-ink/20")} />
                 </button>
               ))}
             </div>

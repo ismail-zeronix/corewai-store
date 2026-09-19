@@ -17,7 +17,6 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
 import { Input } from "@/components/ui/input";
@@ -263,7 +262,6 @@ export default function CheckoutPage() {
             )}
           </div>
         </main>
-        <SiteFooter mobile="compact" />
         <WhatsAppButton />
       </>
     );
@@ -354,7 +352,6 @@ export default function CheckoutPage() {
             </div>
           </div>
         </main>
-        <SiteFooter mobile="compact" />
         <WhatsAppButton />
       </>
     );
@@ -377,7 +374,6 @@ export default function CheckoutPage() {
             </div>
           </div>
         </main>
-        <SiteFooter mobile="compact" />
         <WhatsAppButton />
       </>
     );
@@ -398,7 +394,6 @@ export default function CheckoutPage() {
             </Link>
           </div>
         </main>
-        <SiteFooter mobile="compact" />
         <WhatsAppButton />
       </>
     );
@@ -657,7 +652,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </main>
-      <SiteFooter mobile="compact" />
       <WhatsAppButton />
     </>
   );

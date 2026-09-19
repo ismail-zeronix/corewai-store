@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, ArrowLeft, Lock } from "lucide-react";
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
 import { Button } from "@/components/ui/button";
@@ -183,7 +182,6 @@ export default function CartPage() {
           )}
         </div>
       </main>
-      <SiteFooter mobile="compact" />
       <WhatsAppButton />
     </>
   );

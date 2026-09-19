@@ -203,6 +203,11 @@
   body:has(.product-page) { --mobile-nav-offset: calc(5rem + env(safe-area-inset-bottom, 0px)); }
   body:has(.checkout-page) { --mobile-nav-offset: env(safe-area-inset-bottom, 0px); }
   body:has(.product-page, .checkout-page) .mobile-bottom-nav { display: none; }
+  /* Footer treatment per page, replacing the old per-page `mobile` prop. The PDP hides
+     the footer entirely on mobile because the sticky purchase bar owns the bottom edge. */
+  body:has(.product-page) .site-footer-full { display: none; }
+  body:has(.cart-page, .checkout-page) .site-footer-full { display: none; }
+  body:has(.cart-page, .checkout-page) .site-footer-compact { display: block; }
   body:has(.product-page, .cart-page, .checkout-page) .whatsapp-float { display: none; }
   .mobile-site-header {
     padding-top: env(safe-area-inset-top, 0px);

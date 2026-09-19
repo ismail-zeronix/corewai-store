@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
 import { ProductGrid } from "@/components/plp/ProductGrid";
@@ -37,7 +36,6 @@ export default async function NewArrivalsPage() {
           />
         </div>
       </main>
-      <SiteFooter />
       <WhatsAppButton />
     </>
   );
