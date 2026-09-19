@@ -32,7 +32,7 @@ export default function CartPage() {
               className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
-              Continue Shopping
+              Continue shopping
             </Link>
           </div>
 
@@ -46,7 +46,7 @@ export default function CartPage() {
               <OrderSummarySkeleton />
             </div>
           ) : items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-white px-6 py-20 text-center">
+            <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-white px-6 py-14 text-center">
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <ShoppingBag className="h-7 w-7" />
               </span>
@@ -56,7 +56,7 @@ export default function CartPage() {
               </p>
               <Link
                 href="/products"
-                className="mt-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-primary/90"
+                className="mt-2 rounded-lg bg-primary px-5 py-2.5 text-body-sm font-semibold text-white hover:bg-primary/90"
               >
                 Start Shopping
               </Link>
@@ -141,7 +141,7 @@ export default function CartPage() {
               </div>
 
               <div className="h-fit rounded-xl border border-border bg-white p-5 lg:sticky lg:top-24 lg:self-start">
-                <h2 className="font-display text-base font-bold text-foreground">Order Summary</h2>
+                <h2 className="font-display text-base font-bold text-foreground">Order summary</h2>
                 <div className="mt-4 flex flex-col gap-2 text-sm">
                   <div className="flex justify-between text-muted-foreground">
                     <span>Subtotal</span>

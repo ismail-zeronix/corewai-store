@@ -82,7 +82,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {product.brand && (
                 <p className="text-body-sm font-medium text-muted-foreground">{product.brand}</p>
               )}
-              <h1 className="break-words font-display text-h2 font-semibold leading-snug tracking-tight text-foreground">
+              {/* text-title, not h2: these names are ~120-character spec strings, and at h2 the
+                  heading ran to four lines and swamped the price and buy box below it. */}
+              <h1 className="break-words font-display text-title font-semibold leading-snug tracking-tight text-foreground">
                 {product.name}
               </h1>
 

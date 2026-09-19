@@ -57,7 +57,7 @@ export default function CheckoutPage() {
                 </p>
 
                 <div className="mt-4 w-full rounded-xl border border-border bg-white p-5 text-left sm:p-6">
-                  <h2 className="font-display text-base font-bold text-foreground">Order Summary</h2>
+                  <h2 className="font-display text-base font-bold text-foreground">Order summary</h2>
                   <OrderItemsList items={orderSnapshot.items} className="mt-4" />
 
                   <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4 text-sm">
@@ -114,9 +114,9 @@ export default function CheckoutPage() {
                 <div className="mt-2 flex flex-col gap-2 sm:flex-row">
                   <Link
                     href="/products"
-                    className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-primary/90"
+                    className="rounded-lg bg-primary px-5 py-2.5 text-body-sm font-semibold text-white hover:bg-primary/90"
                   >
-                    Continue Shopping
+                    Continue shopping
                   </Link>
                   <Link
                     href="/"
@@ -142,9 +142,9 @@ export default function CheckoutPage() {
                 <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                   <Link
                     href="/products"
-                    className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-primary/90"
+                    className="rounded-lg bg-primary px-5 py-2.5 text-body-sm font-semibold text-white hover:bg-primary/90"
                   >
-                    Continue Shopping
+                    Continue shopping
                   </Link>
                   <Link
                     href="/"
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
             <p className="text-sm text-muted-foreground">Add something to your cart before checking out.</p>
             <Link
               href="/products"
-              className="mt-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-primary/90"
+              className="mt-2 rounded-lg bg-primary px-5 py-2.5 text-body-sm font-semibold text-white hover:bg-primary/90"
             >
               Browse Products
             </Link>
@@ -334,7 +334,7 @@ export default function CheckoutPage() {
               <AccordionItem value="order-summary">
                 <AccordionTrigger className="py-3.5 text-sm font-semibold text-foreground hover:no-underline">
                   <span className="flex flex-wrap items-baseline gap-x-1.5">
-                    <span>Order Summary</span>
+                    <span>Order summary</span>
                     <span className="font-normal text-muted-foreground">
                       · {items.length} {items.length === 1 ? "item" : "items"} · {formatAed(subtotal)}
                     </span>
@@ -394,7 +394,7 @@ export default function CheckoutPage() {
             </div>
 
             <div className="hidden rounded-xl border border-border bg-white p-5 lg:block lg:sticky lg:top-24 lg:self-start">
-              <h2 className="font-display text-base font-bold text-foreground">Order Summary</h2>
+              <h2 className="font-display text-base font-bold text-foreground">Order summary</h2>
               <OrderItemsList items={items} className="mt-4" />
               <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4 text-sm">
                 <div className="flex justify-between text-muted-foreground">

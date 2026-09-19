@@ -34,7 +34,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
             href="/products"
             className="group flex items-center gap-1 text-xs font-semibold text-foreground hover:text-primary sm:text-sm"
           >
-            <span className="sm:hidden">View All</span>
+            <span className="sm:hidden">View all</span>
             <span className="hidden sm:inline">View All Products</span>
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 sm:h-4 sm:w-4" />
           </Link>

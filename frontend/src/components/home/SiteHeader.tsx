@@ -110,7 +110,7 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
       {/* Desktop: one row. The solid blue category bar and the auto-scrolling offer
           marquee that used to sit beneath this were the two loudest, most template-like
           elements on the page; search is now the widest thing in the header instead. */}
-      <div className="mx-auto hidden h-20 max-w-7xl items-center gap-5 px-6 md:flex lg:px-8">
+      <div className="mx-auto hidden h-20 max-w-7xl items-center gap-3 px-4 md:flex lg:gap-5 lg:px-8">
         <Link
           href="/"
           className="flex shrink-0 items-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary"
@@ -122,13 +122,13 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
             width={205}
             height={80}
             priority
-            className="h-11 w-auto object-contain"
+            className="h-9 w-auto object-contain lg:h-11"
           />
         </Link>
 
         {hasCategories && (
           <Sheet open={categoriesOpen} onOpenChange={setCategoriesOpen}>
-            <SheetTrigger className="flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-body-sm font-medium text-ink outline-none hover:bg-cloud focus-visible:ring-2 focus-visible:ring-primary">
+            <SheetTrigger className="flex shrink-0 items-center gap-2 rounded-lg px-2 py-2 text-body-sm font-medium text-ink lg:px-3 outline-none hover:bg-cloud focus-visible:ring-2 focus-visible:ring-primary">
               <LayoutGrid className="size-4" aria-hidden="true" />
               Categories
             </SheetTrigger>
@@ -155,13 +155,16 @@ export function SiteHeader({ categories }: { categories: Category[] }) {
           />
         </form>
 
-        <nav aria-label="Main navigation" className="flex shrink-0 items-center gap-1">
+        {/* Tighter at md, roomier at lg. The md–lg band has no mobile bottom bar (that
+            stops at 768px), so hiding these links would leave that range with no primary
+            navigation at all; the row is narrowed instead. */}
+        <nav aria-label="Main navigation" className="flex shrink-0 items-center gap-0.5 lg:gap-1">
           {primaryNav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               aria-current={pathname === item.href ? "page" : undefined}
-              className="rounded-lg px-3 py-2 text-body-sm font-medium text-muted-foreground outline-none hover:bg-cloud not-aria-[current=page]:hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary aria-[current=page]:font-semibold aria-[current=page]:text-foreground"
+              className="rounded-lg px-2 py-2 text-body-sm font-medium text-muted-foreground lg:px-3 outline-none hover:bg-cloud not-aria-[current=page]:hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary aria-[current=page]:font-semibold aria-[current=page]:text-foreground"
             >
               {item.label}
             </Link>

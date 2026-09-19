@@ -115,7 +115,10 @@
   --secondary: var(--brand-mist);
   --secondary-foreground: var(--brand-ink);
   --muted: var(--brand-mist);
-  --muted-foreground: #6b7099;
+  /* Darkened from #6b7099, which cleared AA on white (4.77:1) but not on the cloud page
+     background (4.42:1) — and cloud is what most muted text actually sits on. Now
+     5.19:1 on white, 4.80:1 on cloud. */
+  --muted-foreground: #666a91;
   --accent: var(--brand-cyan);
   --accent-foreground: #ffffff;
   --destructive: var(--brand-error);

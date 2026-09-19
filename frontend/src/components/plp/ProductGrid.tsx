@@ -16,7 +16,7 @@ export function ProductGrid({
 }: ProductGridProps) {
   if (products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-white px-6 py-16 text-center">
+      <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-white px-6 py-14 text-center">
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
           <PackageSearch className="h-6 w-6" />
         </span>
@@ -24,7 +24,7 @@ export function ProductGrid({
         <p className="max-w-sm text-sm text-muted-foreground">{emptyDescription}</p>
         <Link
           href="/products"
-          className="mt-2 inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white hover:bg-primary/90"
+          className="mt-2 inline-flex min-h-11 items-center rounded-lg bg-primary px-5 py-2 text-body-sm font-semibold text-white hover:bg-primary/90"
         >
           Browse All Products
         </Link>
