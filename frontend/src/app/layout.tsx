@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { MobileNavigation } from "@/components/home/MobileNavigation";
 import { PromoStrip } from "@/components/home/PromoStrip";
+import { SiteHeader } from "@/components/home/SiteHeader";
 import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import { CartProvider } from "@/lib/cart/cart-context";
+import { getCategories } from "@/lib/vendure/collections";
 import "./globals.css";
 
 // Manrope leads: its tighter apertures and geometric cut give headings a voice,
@@ -38,7 +40,12 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+// The header lives here rather than in each page: it is identical on every route, and
+// only a server component can feed it the real category list. Several pages are client
+// components, which cannot render an async child, so per-page rendering could not.
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const categories = await getCategories();
+
   return (
     <html
       lang="en"
@@ -47,7 +54,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-cloud text-ink font-body">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-primary">Skip to content</a>
         <PromoStrip />
-        <CartProvider>{children}<MobileNavigation /></CartProvider>
+        <CartProvider>
+          <SiteHeader categories={categories} />
+          {children}
+          <MobileNavigation />
+        </CartProvider>
       </body>
     </html>
   );

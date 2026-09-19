@@ -17,7 +17,6 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
-import { SiteHeader } from "@/components/home/SiteHeader";
 import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
@@ -147,7 +146,6 @@ export default function CheckoutPage() {
   if (step === "confirmed") {
     return (
       <>
-        <SiteHeader />
         <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             {orderSnapshot ? (
@@ -274,7 +272,6 @@ export default function CheckoutPage() {
   if (step === "processing") {
     return (
       <>
-        <SiteHeader />
         <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
@@ -366,7 +363,6 @@ export default function CheckoutPage() {
   if (!isHydrated) {
     return (
       <>
-        <SiteHeader />
         <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
             <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Cart", href: "/cart" }, { label: "Checkout" }]} />
@@ -390,7 +386,6 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <>
-        <SiteHeader />
         <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
           <div className="mx-auto flex max-w-xl flex-col items-center gap-4 px-4 py-20 text-center sm:px-6">
             <p className="font-display text-xl font-bold text-foreground">Your cart is empty</p>
@@ -411,7 +406,6 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <SiteHeader />
       <main id="main-content" tabIndex={-1} className="checkout-page flex-1">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Cart", href: "/cart" }, { label: "Checkout" }]} />

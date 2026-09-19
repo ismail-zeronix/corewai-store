@@ -11,12 +11,15 @@ import { formatAed } from "@/lib/format";
 import { useCart } from "@/lib/cart/cart-context";
 import type { Product } from "@/lib/placeholder-data";
 
+// One solid badge (Best Seller) is the only loud treatment; everything else is a tinted
+// label. Hues carry meaning rather than decorating: lime marks a price drop, amber marks
+// urgency, neutral marks everything merely descriptive.
 const badgeStyles: Record<string, string> = {
-  new: "bg-cyan/15 text-cyanink",
-  sale: "bg-lime/20 text-ink",
-  "low-stock": "bg-amber/15 text-amberink",
+  new: "bg-ink/8 text-ink",
+  sale: "bg-lime/25 text-ink",
+  "low-stock": "bg-amber/20 text-amberink",
   bestseller: "bg-primary text-white",
-  trending: "bg-primary/10 text-primary",
+  trending: "bg-ink/8 text-ink",
   "out-of-stock": "bg-mist text-muted-foreground",
 };
 
@@ -74,7 +77,10 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
                   src={src}
                   alt={index === 0 ? product.name : `${product.name} — view ${index + 1}`}
                   fill
-                  className="object-contain"
+                  // Padding on the image (not the container) is what actually insets a
+                  // `fill` image: `inset-0` resolves against the parent's padding box, so
+                  // padding on the parent would not move it.
+                  className="object-contain p-4"
                   sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
                 />
               </div>
@@ -84,7 +90,7 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
 
           {label && (
             <span
-              className={`absolute left-2 top-2 rounded-full px-2 py-0.5 text-caption font-semibold uppercase tracking-wide ${badgeStyles[product.badge!]}`}
+              className={`absolute left-2 top-2 rounded-full px-2.5 py-1 text-caption font-semibold leading-none ${badgeStyles[product.badge!]}`}
             >
               {label}
             </span>
@@ -113,53 +119,56 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
 
         <div>
           <Link href={`/product/${product.slug}`} className="block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary">
-          {product.brand && <p className="text-xs font-medium text-primary">{product.brand}</p>}
-          <h3 className="mt-0.5 line-clamp-2 font-display text-sm font-semibold leading-snug text-foreground">
+          {/* Brand keeps its own casing — forcing uppercase would render "Asus" and "Hp". */}
+          {product.brand && <p className="text-caption font-medium text-muted-foreground">{product.brand}</p>}
+          <h3 className="mt-1 line-clamp-2 font-display text-body-sm font-semibold leading-snug text-foreground sm:text-body">
             {product.name}
           </h3>
           </Link>
 
           {typeof product.rating === "number" && (
-            <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-              <Star className="h-3.5 w-3.5 fill-amber text-amber" />
+            <div className="mt-2 flex items-center gap-1 text-caption text-muted-foreground">
+              <Star className="h-3.5 w-3.5 fill-amber text-amber" aria-hidden="true" />
               <span className="font-medium text-foreground">{product.rating}</span>
               <span>({product.reviewCount})</span>
             </div>
           )}
 
-          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2 tabular-nums sm:mt-2">
-            <span className="font-display text-sm font-bold text-foreground sm:text-base">
+          <div className="mt-2 flex flex-wrap items-baseline gap-x-2 tabular-nums">
+            <span className="font-display text-body font-semibold text-foreground sm:text-title">
               {formatAed(product.price)}
             </span>
             {product.compareAtPrice && (
-              <span className="text-xs text-muted-foreground line-through">
+              <span className="text-caption text-muted-foreground line-through">
                 {formatAed(product.compareAtPrice)}
               </span>
             )}
           </div>
 
           {countdownLabel && (
-            <div className="mt-1.5 flex items-center gap-1 text-caption font-medium text-destructive sm:mt-2">
-              <Timer className="h-3 w-3" />
-              <span className="font-mono tabular-nums">{countdownLabel}</span>
+            <div className="mt-2 flex items-center gap-1 text-caption font-medium text-destructive">
+              <Timer className="h-3.5 w-3.5" aria-hidden="true" />
+              <span className="tabular-nums">{countdownLabel}</span>
             </div>
           )}
         </div>
       </CardContent>
 
-      <CardFooter className="mt-auto border-t-0 bg-transparent px-(--card-spacing) pt-0">
+      <CardFooter className="px-(--card-spacing)">
         <Button
           size="sm"
           variant="outline"
           disabled={outOfStock}
           onClick={handleAddToCart}
           className={cn(
-            "min-h-11 w-full gap-1 rounded-lg border-primary/30 px-2 text-xs text-primary hover:bg-primary/5 hover:text-primary sm:text-sm",
-            added && "bg-lime text-ink hover:bg-lime",
+            "min-h-11 w-full gap-1.5 border-primary/30 px-2 text-body-sm text-primary hover:bg-primary/5 hover:text-primary",
+            // Confirmation reads in the action colour, not lime — lime is reserved for
+            // price-drop labelling so it stays meaningful wherever it appears.
+            added && "border-primary bg-primary/10 hover:bg-primary/10",
           )}
         >
-          {added ? <Check className="h-4 w-4" /> : <ShoppingCart className="h-4 w-4" />}
-          {added ? "Added" : outOfStock ? "Out of Stock" : "Add to Cart"}
+          {added ? <Check className="h-4 w-4" aria-hidden="true" /> : <ShoppingCart className="h-4 w-4" aria-hidden="true" />}
+          {added ? "Added" : outOfStock ? "Out of stock" : "Add to cart"}
         </Button>
       </CardFooter>
     </Card>

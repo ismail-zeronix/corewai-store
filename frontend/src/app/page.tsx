@@ -1,4 +1,3 @@
-import { SiteHeader } from "@/components/home/SiteHeader";
 import { Hero } from "@/components/home/Hero";
 import { FeaturedCategories } from "@/components/home/FeaturedCategories";
 import { PromoBanners } from "@/components/home/PromoBanners";
@@ -20,7 +19,6 @@ export default async function Home() {
 
   return (
     <>
-      <SiteHeader />
 
       <main id="main-content" tabIndex={-1} className="flex-1">
         <Hero />

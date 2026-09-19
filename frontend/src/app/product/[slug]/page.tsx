@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ShieldCheck, Truck, Lock, RotateCcw, Star, ChevronLeft, MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { SiteHeader } from "@/components/home/SiteHeader";
 import { SiteFooter } from "@/components/home/SiteFooter";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { ProductRail } from "@/components/home/ProductRail";
@@ -57,7 +56,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <SiteHeader />
       <main id="main-content" tabIndex={-1} className="product-page min-w-0 flex-1">
         <div className="mx-auto max-w-7xl px-4 py-1 md:px-6 md:py-4 lg:px-8">
           <Link href={product.categorySlug ? `/category/${product.categorySlug}` : "/products"} className="inline-flex min-h-11 max-w-full items-center gap-1 rounded-lg text-xs font-medium text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary md:hidden">

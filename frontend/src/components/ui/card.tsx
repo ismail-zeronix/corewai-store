@@ -83,7 +83,9 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-footer"
       className={cn(
-        "flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)",
+        // Transparent and borderless by default: every consumer in this codebase was
+        // overriding the old tinted, top-bordered footer to get exactly this.
+        "mt-auto flex items-center rounded-b-xl p-(--card-spacing) pt-0",
         className
       )}
       {...props}

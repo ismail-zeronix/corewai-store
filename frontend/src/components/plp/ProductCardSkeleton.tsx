@@ -16,7 +16,7 @@ export function ProductCardSkeleton() {
         </div>
       </CardContent>
 
-      <CardFooter className="border-t-0 bg-transparent px-(--card-spacing) pt-0">
+      <CardFooter className="px-(--card-spacing)">
         <Skeleton className="h-8 w-full rounded-lg sm:h-9" />
       </CardFooter>
     </Card>

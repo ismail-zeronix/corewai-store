@@ -23,7 +23,9 @@ export function SiteFooter({ mobile = "full" }: { mobile?: "full" | "compact" | 
           <p>© {new Date().getFullYear()} CoreWAI Supply.</p>
         </footer>
       )}
-      <footer className={cn("mt-auto bg-blue text-white/80", mobile !== "full" && "hidden md:block")}>
+      {/* Ink, not brand blue. A full-bleed #3a4efb slab was the largest area of
+          maximum-saturation colour on the site and competed with every CTA above it. */}
+      <footer className={cn("mt-auto bg-ink text-white/70", mobile !== "full" && "hidden md:block")}>
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
             <div>
