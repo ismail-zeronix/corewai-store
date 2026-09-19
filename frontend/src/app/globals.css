@@ -182,27 +182,6 @@
   }
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@utility animate-marquee {
-  animation: marquee 16s linear infinite;
-}
-
-@utility animate-marquee-slow {
-  animation: marquee 34s linear infinite;
-}
-
-@utility animate-marquee-slow-reverse {
-  animation: marquee 34s linear infinite reverse;
-}
-
 @keyframes shimmer {
   100% {
     transform: translateX(100%);

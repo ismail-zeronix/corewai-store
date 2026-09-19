@@ -30,7 +30,7 @@ export default function BrandsPage() {
               <Link
                 key={brand}
                 href={`/products?brand=${encodeURIComponent(brand)}`}
-                className="flex h-24 items-center justify-center rounded-2xl border border-border bg-white px-4 text-center transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+                className="flex h-24 items-center justify-center rounded-2xl border border-border bg-white px-4 text-center transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-elevated"
               >
                 <span className="font-display text-base font-semibold text-foreground/70">
                   {brand}

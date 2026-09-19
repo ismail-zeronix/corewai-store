@@ -108,9 +108,6 @@ export function SiteHeader() {
         </div>
 
         <div className="ml-auto flex items-center gap-1 sm:gap-2">
-
-
-
           <Link
             href="/cart"
             aria-label={isHydrated ? `Cart, ${itemCount} items` : "Cart"}
@@ -123,8 +120,6 @@ export function SiteHeader() {
               </span>
             )}
           </Link>
-
-
         </div>
       </div>
 
@@ -161,7 +156,7 @@ export function SiteHeader() {
                 key={item.label}
                 href={item.href}
                 aria-current={pathname === item.href ? "page" : undefined}
-                className="shrink-0 rounded-full px-3.5 py-2.5 text-sm font-medium text-foreground/75 hover:bg-cloud hover:text-foreground aria-[current=page]:bg-cloud aria-[current=page]:text-foreground"
+                className="shrink-0 rounded-full px-3.5 py-2.5 text-sm font-medium text-foreground/75 hover:bg-cloud hover:text-foreground aria-[current=page]:bg-cloud aria-[current=page]:font-semibold aria-[current=page]:text-primary"
               >
                 {item.label}
               </Link>

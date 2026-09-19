@@ -19,14 +19,14 @@ export function Hero() {
             className="object-cover object-center motion-safe:transition-transform motion-safe:duration-500 md:group-hover:scale-[1.03]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
-          <div className="relative p-4 md:p-8 lg:p-10">
+          <div className="relative p-3 sm:p-4 md:p-8 lg:p-10">
             <p className="text-xs font-bold uppercase tracking-widest text-lime">
               Tech for work and home
             </p>
-            <h1 className="mt-2 max-w-md text-balance font-display text-2xl font-semibold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl">
+            <h1 className="mt-1 max-w-md text-balance font-display text-xl font-semibold leading-tight tracking-tight text-white sm:mt-2 sm:text-2xl md:text-4xl lg:text-5xl">
               Built for the next level
             </h1>
-            <span className={buttonVariants({ size: "lg", className: "mt-3 md:mt-5" })}>
+            <span className={buttonVariants({ size: "lg", className: "mt-2 sm:mt-3 md:mt-5" })}>
               Explore products
             </span>
           </div>

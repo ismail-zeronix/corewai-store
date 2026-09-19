@@ -13,7 +13,7 @@ import type { Product } from "@/lib/placeholder-data";
 
 const badgeStyles: Record<string, string> = {
   new: "bg-cyan/15 text-cyanink",
-  sale: "bg-lime/20 text-greenink",
+  sale: "bg-lime/20 text-ink",
   "low-stock": "bg-amber/15 text-amberink",
   bestseller: "bg-primary text-white",
   trending: "bg-primary/10 text-primary",
@@ -150,11 +150,11 @@ export function ProductCard({ product, countdownLabel }: ProductCardProps) {
       <CardFooter className="mt-auto border-t-0 bg-transparent px-(--card-spacing) pt-0">
         <Button
           size="sm"
-          variant="secondary"
+          variant="outline"
           disabled={outOfStock}
           onClick={handleAddToCart}
           className={cn(
-            "min-h-11 w-full gap-1 rounded-lg px-2 text-xs sm:text-sm",
+            "min-h-11 w-full gap-1 rounded-lg border-primary/30 px-2 text-xs text-primary hover:bg-primary/5 hover:text-primary sm:text-sm",
             added && "bg-lime text-ink hover:bg-lime",
           )}
         >
