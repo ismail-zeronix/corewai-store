@@ -33,7 +33,7 @@ export function CartToast({ notification, onDismiss }: {
       }}
       className="pointer-events-auto flex items-start gap-3 rounded-xl border border-mist bg-white p-3 text-ink shadow-lg motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-2"
     >
-      <span className="mt-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-lime">
+      <span className="mt-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
         <Check className="size-5" aria-hidden="true" />
       </span>
       <div className="min-w-0 flex-1 pt-1">

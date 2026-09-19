@@ -1,5 +1,6 @@
 import type { Product } from "@/lib/placeholder-data";
 import { shopApiFetch } from "./shop-client";
+import { decodeHtmlEntities } from "./html-entities";
 
 const PRODUCT_FIELDS = `
   id
@@ -11,7 +12,16 @@ const PRODUCT_FIELDS = `
   assets { preview }
   facetValues { name facet { name } }
   collections { id name slug }
-  variants { id price priceWithTax currencyCode stockLevel sku }
+  optionGroups { id code name options { id code name } }
+  variants {
+    id
+    price
+    priceWithTax
+    currencyCode
+    stockLevel
+    sku
+    options { id code name groupId }
+  }
 `;
 
 const PRODUCTS_QUERY = `
@@ -55,6 +65,14 @@ interface VendureVariant {
   currencyCode: string;
   stockLevel: string;
   sku: string;
+  options: Array<{ id: string; code: string; name: string; groupId: string }>;
+}
+
+interface VendureOptionGroup {
+  id: string;
+  code: string;
+  name: string;
+  options: Array<{ id: string; code: string; name: string }>;
 }
 
 interface VendureProduct {
@@ -67,6 +85,7 @@ interface VendureProduct {
   assets: VendureAsset[];
   facetValues: VendureFacetValue[];
   collections: VendureCollection[];
+  optionGroups: VendureOptionGroup[];
   variants: VendureVariant[];
 }
 
@@ -79,19 +98,6 @@ interface ProductsQueryResult {
 
 interface ProductQueryResult {
   product: VendureProduct | null;
-}
-
-const HTML_ENTITIES: Record<string, string> = {
-  "&quot;": '"',
-  "&amp;": "&",
-  "&#39;": "'",
-  "&apos;": "'",
-  "&lt;": "<",
-  "&gt;": ">",
-};
-
-function decodeHtmlEntities(value: string): string {
-  return value.replace(/&quot;|&amp;|&#39;|&apos;|&lt;|&gt;/g, (match) => HTML_ENTITIES[match]);
 }
 
 const FALLBACK_IMAGE =
@@ -125,6 +131,20 @@ function mapVendureProduct(product: VendureProduct): Product {
     badge: outOfStock ? "out-of-stock" : undefined,
     image: images[0] ?? FALLBACK_IMAGE,
     images: images.length > 0 ? images : [FALLBACK_IMAGE],
+    // Every variant, not just the first. Only variant[0] was ever read before, so a
+    // multi-configuration product showed one price and added the wrong item to the cart.
+    optionGroups: (product.optionGroups ?? []).map((group) => ({
+      id: group.id,
+      name: group.name,
+      options: group.options.map((option) => ({ id: option.id, name: option.name })),
+    })),
+    variants: product.variants.map((v) => ({
+      id: v.id,
+      sku: v.sku,
+      price: v.priceWithTax / 100,
+      inStock: v.stockLevel !== "OUT_OF_STOCK",
+      optionIds: (v.options ?? []).map((option) => option.id),
+    })),
   };
 }
 

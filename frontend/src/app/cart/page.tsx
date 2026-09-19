@@ -69,7 +69,7 @@ export default function CartPage() {
                     Add {formatAed(remainingForFreeShipping)} more to get FREE shipping
                   </div>
                 ) : (
-                  <div className="rounded-xl bg-lime px-4 py-3 text-sm font-semibold text-ink">
+                  <div className="rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 text-body-sm font-medium text-primary">
                     You&apos;ve unlocked FREE shipping on this order
                   </div>
                 )}

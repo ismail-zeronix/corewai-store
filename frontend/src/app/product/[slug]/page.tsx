@@ -5,14 +5,14 @@ import { ShieldCheck, Truck, Lock, RotateCcw, Star, ChevronLeft, MessageCircle }
 import Link from "next/link";
 import { WhatsAppButton } from "@/components/home/WhatsAppButton";
 import { ProductRail } from "@/components/home/ProductRail";
-import { formatAed } from "@/lib/format";
 import { Breadcrumb } from "@/components/plp/Breadcrumb";
 import { Gallery } from "@/components/pdp/Gallery";
 import { AddToCartPanel } from "@/components/pdp/AddToCartPanel";
 import { ProductTabs } from "@/components/pdp/ProductTabs";
 import { Specifications } from "@/components/pdp/Specifications";
 import { Reviews } from "@/components/pdp/Reviews";
-import { getProductBySlug, getProducts } from "@/lib/vendure/products";
+import { getProductBySlug } from "@/lib/vendure/products";
+import { searchProducts } from "@/lib/vendure/search";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -43,15 +43,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  const allProducts = await getProducts(12);
-  const related = allProducts
-    .filter((p) => p.id !== product.id && p.categorySlug === product.categorySlug)
-    .slice(0, 5);
+  // Related products come from the product's actual collection. The old comparison was
+  // `p.categorySlug === product.categorySlug` over a catalogue where every categorySlug
+  // was undefined, so `undefined === undefined` matched everything: the rail was the
+  // whole catalogue, in catalogue order, not related products at all.
+  const related = product.categorySlug
+    ? (await searchProducts({ collectionSlug: product.categorySlug, take: 6 })).products
+        .filter((p) => p.id !== product.id)
+        .slice(0, 5)
+    : [];
 
-  const discount =
-    product.compareAtPrice && product.compareAtPrice > product.price
-      ? Math.round(100 - (product.price / product.compareAtPrice) * 100)
-      : null;
 
   return (
     <>
@@ -79,9 +80,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             <div className="flex min-w-0 flex-col gap-3">
               {product.brand && (
-                <p className="text-xs font-semibold text-primary">{product.brand}</p>
+                <p className="text-body-sm font-medium text-muted-foreground">{product.brand}</p>
               )}
-              <h1 className="break-words font-display text-lg font-semibold leading-snug tracking-tight text-foreground md:text-2xl">
+              <h1 className="break-words font-display text-h2 font-semibold leading-snug tracking-tight text-foreground">
                 {product.name}
               </h1>
 
@@ -93,29 +94,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               )}
 
-              <div className="flex flex-wrap items-baseline gap-2 border-t border-border pt-3">
-                <span className="font-display text-xl font-semibold tracking-tight text-foreground tabular-nums md:text-2xl">
-                  {formatAed(product.price)}
-                </span>
-                {discount && product.compareAtPrice && (
-                  <span className="text-xs text-muted-foreground line-through tabular-nums md:text-sm">
-                    {formatAed(product.compareAtPrice)}
-                  </span>
-                )}
-                {discount && (
-                  <span className="rounded-full bg-lime/20 px-2.5 py-0.5 text-xs font-bold text-ink">
-                    -{discount}%
-                  </span>
-                )}
-              </div>
-
-              <p className="text-xs font-medium">
-                {product.inStock === false || product.badge === "out-of-stock" ? (
-                  <span className="text-destructive">Out of stock</span>
-                ) : (
-                  <span className="text-primary">In stock — ready to ship</span>
-                )}
-              </p>
 
               <AddToCartPanel key={product.id} product={product} />
 
@@ -155,8 +133,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           {related.length > 0 && (
             <div className="mt-6 md:mt-12">
-              <h2 className="mb-3 font-display text-base font-semibold tracking-tight text-foreground md:text-lg">
-                You may also like
+              <h2 className="mb-4 font-display text-h2 font-semibold tracking-tight text-foreground">
+                More in {product.category}
               </h2>
               <ProductRail products={related} />
             </div>

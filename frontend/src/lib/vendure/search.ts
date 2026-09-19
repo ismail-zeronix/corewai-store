@@ -1,5 +1,6 @@
 import type { Product } from "@/lib/placeholder-data";
 import { shopApiFetch } from "./shop-client";
+import { decodeHtmlEntities } from "./html-entities";
 
 /**
  * Catalogue search and faceted browsing, backed by Vendure's DefaultSearchPlugin index.
@@ -119,14 +120,14 @@ function mapSearchItem(item: SearchResultItem): Product {
   return {
     id: item.productId,
     slug: item.slug,
-    name: item.productName,
+    name: decodeHtmlEntities(item.productName),
     // The search index has no brand or category field of its own. Both are resolved from
     // facet IDs by the caller, which already holds the facet list from the same response.
     brand: "",
     category: "",
     price: lowestPrice(item.priceWithTax),
     sku: item.sku,
-    description: item.description,
+    description: decodeHtmlEntities(item.description ?? ""),
     inStock: item.inStock,
     badge: item.inStock ? undefined : "out-of-stock",
     image: item.productAsset?.preview ?? FALLBACK_IMAGE,

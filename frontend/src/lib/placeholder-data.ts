@@ -4,6 +4,23 @@
 
 export type ProductBadge = "new" | "sale" | "low-stock" | "bestseller" | "trending" | "out-of-stock";
 
+/** One purchasable variant, with the option values that identify it. */
+export interface ProductVariant {
+  id: string;
+  sku?: string;
+  price: number;
+  inStock: boolean;
+  /** Option value ids, one per option group. Empty for single-variant products. */
+  optionIds: string[];
+}
+
+/** An option group (e.g. "RAM") and its selectable values. */
+export interface ProductOptionGroup {
+  id: string;
+  name: string;
+  options: Array<{ id: string; name: string }>;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -24,6 +41,8 @@ export interface Product {
   createdAt?: string;
   image: string;
   images?: string[];
+  optionGroups?: ProductOptionGroup[];
+  variants?: ProductVariant[];
 }
 
 export interface Category {

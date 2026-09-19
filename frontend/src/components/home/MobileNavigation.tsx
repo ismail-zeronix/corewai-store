@@ -28,7 +28,7 @@ export function MobileNavigation() {
               <span className="relative">
                 <Icon className="size-5" aria-hidden="true" />
                 {label === "Cart" && isHydrated && itemCount > 0 && (
-                  <span aria-hidden="true" className="absolute -right-3 -top-1 min-w-5 rounded-full bg-lime px-1 text-center text-caption leading-5 font-semibold text-ink">{itemCount > 99 ? "99+" : itemCount}</span>
+                  <span aria-hidden="true" className="absolute -right-3 -top-1 min-w-5 rounded-full bg-primary px-1 text-center text-caption leading-5 font-semibold text-white">{itemCount > 99 ? "99+" : itemCount}</span>
                 )}
               </span>
               {label}
