@@ -20,7 +20,7 @@ export function SiteFooter({ mobile = "full" }: { mobile?: "full" | "compact" | 
       {mobile === "compact" && (
         <footer className="mt-auto border-t border-mist bg-white px-4 py-3 text-center text-xs text-muted-foreground md:hidden">
           <Link href="/products" className="inline-flex min-h-11 items-center rounded-lg px-3 font-medium text-primary">Continue shopping</Link>
-          <p>? {new Date().getFullYear()} CoreWAI Supply.</p>
+          <p>© {new Date().getFullYear()} CoreWAI Supply.</p>
         </footer>
       )}
       <footer className={cn("mt-auto bg-blue text-white/80", mobile !== "full" && "hidden md:block")}>
@@ -42,7 +42,7 @@ export function SiteFooter({ mobile = "full" }: { mobile?: "full" | "compact" | 
               <ul className="grid grid-cols-2 gap-x-4 lg:grid-cols-1">{categories.slice(0, 8).map(({ slug, name }) => <li key={slug}><Link href={`/category/${slug}`} className="inline-flex min-h-11 items-center rounded-md text-sm hover:text-white">{name}</Link></li>)}</ul>
             </nav>
           </div>
-          <p className="mt-6 border-t border-white/20 pt-5 text-xs">? {new Date().getFullYear()} CoreWAI Supply. All rights reserved.</p>
+          <p className="mt-6 border-t border-white/20 pt-5 text-xs">© {new Date().getFullYear()} CoreWAI Supply. All rights reserved.</p>
         </div>
       </footer>
     </>

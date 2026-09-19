@@ -156,7 +156,7 @@ export function SiteHeader() {
                 key={item.label}
                 href={item.href}
                 aria-current={pathname === item.href ? "page" : undefined}
-                className="shrink-0 rounded-full px-3.5 py-2.5 text-sm font-medium text-foreground/75 hover:bg-cloud hover:text-foreground aria-[current=page]:bg-cloud aria-[current=page]:font-semibold aria-[current=page]:text-primary"
+                className="shrink-0 rounded-full px-3.5 py-2.5 text-sm font-medium text-foreground/75 hover:bg-cloud not-aria-[current=page]:hover:text-foreground aria-[current=page]:bg-cloud aria-[current=page]:font-semibold aria-[current=page]:text-primary"
               >
                 {item.label}
               </Link>
